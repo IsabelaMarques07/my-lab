@@ -29,7 +29,7 @@ A clean and beautiful personal portfolio website.
 
 **Screenshot:**
 
-[Replace the path below with your actual image file]
+![Personal Website](images/personal-website.png)
 
 ### 2. 🎯 Slingshot Game
 
@@ -41,7 +41,7 @@ A fun, physics-based slingshot web game playable right in the browser.
 
 **Screenshot:**
 
-[Replace the path below with your actual image file]
+![Slingshot Game](images/slingshot.png)
 
 ## 🚀 How to Run
 
