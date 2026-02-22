@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isabela Dias | A Cozy Corner</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cozy-bg': '#FDFBF7',
+                        'cozy-text': '#5C4A42',
+                        'cozy-accent': '#DDA77B',
+                        'cozy-pink': '#E29596',
+                        'cozy-green': '#8A9A86'
+                    },
+                    fontFamily: {
+                        'handwriting': ['Caveat', 'cursive'],
+                        'sans': ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Transições suaves gerais */
+        body, main, h1, p, div, img, button {
+            transition: all 0.5s ease;
+        }
+
+        body {
+            background-color: #FDFBF7;
+            background-image: radial-gradient(#DDA77B 0.5px, transparent 0.5px);
+            background-size: 30px 30px;
+            color: #5C4A42;
+        }
+
+        /* --- TEMA TECNOLÓGICO (CYBER) --- */
+        body.tech-theme {
+            background-color: #0f172a;
+            background-image: radial-gradient(#06b6d4 0.8px, transparent 0.8px);
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body.tech-theme .bg-white\/80 {
+            background-color: rgba(15, 23, 42, 0.85) !important;
+            border-color: #06b6d4 !important;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15) !important;
+        }
+
+        body.tech-theme .text-cozy-text {
+            color: #06b6d4 !important;
+            font-family: 'Courier New', Courier, monospace !important;
+        }
+        
+        body.tech-theme h1.text-cozy-text {
+            text-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
+        }
+
+        body.tech-theme .text-cozy-text\/80 {
+            color: #cbd5e1 !important;
+        }
+
+        body.tech-theme .text-cozy-accent {
+            color: #06b6d4 !important;
+        }
+
+        /* Botões no Tema Tech */
+        body.tech-theme .bg-cozy-text.text-white {
+            background-color: #06b6d4 !important;
+            color: #0f172a !important;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+        body.tech-theme .bg-cozy-text.text-white:hover {
+            background-color: #22d3ee !important;
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
+        }
+
+        body.tech-theme .bg-white.text-cozy-text {
+            background-color: transparent !important;
+            border-color: #06b6d4 !important;
+            color: #06b6d4 !important;
+        }
+        body.tech-theme .bg-white.text-cozy-text:hover {
+            background-color: rgba(6, 182, 212, 0.15) !important;
+        }
+
+        /* Palavras Interativas no Tema Tech */
+        body.tech-theme .magic-word {
+            color: #22d3ee !important;
+            text-decoration-color: #22d3ee !important;
+            text-decoration-style: dashed !important;
+        }
+        body.tech-theme .magic-word:hover {
+            color: #fff !important;
+            text-shadow: 0 0 10px #22d3ee;
+        }
+
+        /* Elementos do Avatar no Tema Tech */
+        body.tech-theme .bg-cozy-pink {
+            background-color: #06b6d4 !important;
+        }
+        body.tech-theme .border-white {
+            border-color: #06b6d4 !important;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5) !important;
+        }
+        body.tech-theme .bg-cozy-bg {
+            background-color: #0f172a !important;
+        }
+
+        /* Botão de Idioma no Tema Tech */
+        body.tech-theme #lang-btn {
+            background-color: rgba(15, 23, 42, 0.85);
+            border-color: #06b6d4;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Estilo para as palavras interativas (Base/Aconchegante) */
+        .magic-word {
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+            color: #E29596;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: underline wavy #E29596;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        .magic-word:hover {
+            color: #DDA77B;
+            text-decoration-color: #DDA77B;
+            transform: translateY(-2px);
+        }
+
+        /* Animação de pulsar para indicar interatividade */
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .magic-word.bounce {
+            animation: pulse-soft 0.3s ease-in-out;
+        }
+
+        /* Estilo das partículas da animação fofa */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            font-size: 1.5rem;
+            animation: float-away 1s ease-out forwards;
+        }
+
+        @keyframes float-away {
+            0% {
+                transform: translate(0, 0) scale(0.5) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(var(--rot));
+                opacity: 0;
+            }
+        }
+
+        /* Animação da imagem de perfil */
+        .profile-img {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Animações do Bule Lateral */
+        .animate-container {
+            animation: slide-in-out 3.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .animate-teapot {
+            animation: tilt-teapot 3.5s ease-in-out forwards;
+        }
+        .animate-stream {
+            animation: pour-stream 3.5s ease-in-out forwards;
+        }
+
+        @keyframes slide-in-out {
+            0%, 100% { right: -200px; }
+            15%, 85% { right: 20px; }
+        }
+        @keyframes tilt-teapot {
+            0%, 20%, 80%, 100% { transform: translateY(0) rotate(0deg); }
+            35%, 65% { transform: translateY(-15px) translateX(-5px) rotate(-35deg); }
+        }
+        @keyframes pour-stream {
+            0%, 35% { height: 0; opacity: 0; top: -10px; }
+            40% { opacity: 1; height: 38px; top: -10px; }
+            60% { opacity: 1; height: 38px; top: -10px; }
+            65%, 100% { height: 0; opacity: 0; top: 28px; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center p-6 antialiased font-sans selection:bg-cozy-pink selection:text-white overflow-x-hidden transition-colors duration-500">
+
+    <!-- Botão de Idioma -->
+    <button id="lang-btn" class="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-md border border-cozy-accent/30 text-2xl p-2 rounded-full shadow-sm hover:scale-110 transition-transform duration-300" title="Switch to Portuguese">
+        🇧🇷
+    </button>
+
+    <main class="max-w-2xl w-full bg-white/80 backdrop-blur-sm p-10 md:p-16 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-cozy-bg text-center relative overflow-hidden transition-all duration-500">
+        
+        <!-- Decoração de fundo -->
+        <div id="bg-icon-container" class="absolute top-[-20px] left-[-20px] text-cozy-accent opacity-20 transform -rotate-12 transition-all duration-500">
+            <i data-feather="sun" width="100" height="100"></i>
+        </div>
+        
+        <!-- Foto/Avatar (Agora clicável para mudar o tema!) -->
+        <div id="avatar-btn" class="relative w-32 h-32 mx-auto mb-8 profile-img cursor-pointer hover:scale-105 transition-transform duration-300" title="Click to hack the theme!">
+            <div id="avatar-glow" class="absolute inset-0 bg-cozy-pink rounded-full opacity-20 blur-lg transition-colors duration-500"></div>
+            <img id="avatar-img" src="https://api.dicebear.com/7.x/notionists/svg?seed=Isabela&backgroundColor=fdfbf7" alt="Avatar of Isabela" class="rounded-full w-full h-full object-cover border-4 border-white shadow-md relative z-10 bg-cozy-bg transition-colors duration-500">
+        </div>
+
+        <!-- Nome -->
+        <h1 id="title-text" class="text-5xl md:text-6xl font-handwriting text-cozy-text mb-4 transition-colors duration-500">
+            Hi, I'm Isabela Dias! ✨
+        </h1>
+
+        <!-- Subtítulo Aconchegante e Interativo -->
+        <p id="subtitle-text" class="text-xl md:text-2xl leading-relaxed text-cozy-text/80 mb-10 max-w-lg mx-auto transition-colors duration-500">
+            Welcome to my corner! A space fueled by warm 
+            <span class="magic-word" data-type="coffee" title="Click me!">coffee</span>, 
+            adventures hidden in 
+            <span class="magic-word" data-type="books" title="Click me!">books</span>, 
+            the soft purring of cute 
+            <span class="magic-word" data-type="cats" title="Click me!">cats</span>, and 
+            little touches of daily 
+            <span class="magic-word" data-type="magic" title="Click me!">magic</span>.
+        </p>
+
+        <!-- Botão/Links -->
+        <div class="flex justify-center gap-4">
+            <a href="#" class="px-6 py-3 bg-cozy-text text-white rounded-full font-semibold transition-all duration-300 shadow-sm flex items-center gap-2">
+                <span id="btn-icon-1"><i data-feather="mail" width="18" height="18"></i></span>
+                <span id="btn-text-1">Say Hello</span>
+            </a>
+            <a href="#" class="px-6 py-3 bg-white text-cozy-text border border-cozy-accent/30 rounded-full font-semibold transition-all duration-300 shadow-sm flex items-center gap-2">
+                <span id="btn-icon-2"><i data-feather="book-open" width="18" height="18"></i></span>
+                <span id="btn-text-2">Read my Blog</span>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer id="footer-text" class="mt-12 text-center text-cozy-text/60 text-sm font-medium transition-colors duration-500">
+        Made with love and chamomile tea 🌼
+    </footer>
+
+    <!-- Elementos da Animação do Bule Lateral -->
+    <div id="teapot-container" class="fixed bottom-10 right-[-200px] z-50 flex items-end justify-center pointer-events-none">
+        <div class="relative mb-2">
+            <div class="text-6xl">☕</div>
+            <!-- Stream de café -->
+            <div id="coffee-stream" class="absolute top-[-10px] left-[32px] w-2 h-0 bg-[#6b4c3a] rounded-full opacity-0 z-10"></div>
+        </div>
+        <div id="teapot-emoji" class="text-7xl origin-[20%_80%] z-20 -ml-4">🫖</div>
+    </div>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        // Inicializa os ícones do Feather Icons
+        feather.replace();
+
+        // Dicionário de emojis (Aconchegante e Tecnológico)
+        const emojis = {
+            // Aconchegante
+            coffee: ['☕', '🤎', '💨', '🥐', '🍪'],
+            books: ['📚', '📖', '✨', '🤓', '🔖'],
+            cats: ['🐾', '🐈', '😻', '🧶', '🐟'],
+            magic: ['🪄', '✨', '🌟', '💫', '🔮'],
+            
+            // Tecnológico
+            code: ['💻', '👨‍💻', '0️⃣', '1️⃣', '⚙️'],
+            servers: ['🖥️', '🌐', '☁️', '🖧', '🔋'],
+            hardware: ['🔌', '💽', '⚡', '🔧', '🤖'],
+            gambiarra: ['🩹', '🚨', '🐛', '🛠️', '🔥']
+        };
+
+        // Dicionário de Textos (Inglês e Português)
+        const contentDict = {
+            en: {
+                cozy: {
+                    title: 'Hi, I\'m Isabela Dias! ✨',
+                    subtitle: `Welcome to my corner! A space fueled by warm <span class="magic-word" data-type="coffee" title="Click me!">coffee</span>, adventures hidden in <span class="magic-word" data-type="books" title="Click me!">books</span>, the soft purring of cute <span class="magic-word" data-type="cats" title="Click me!">cats</span>, and little touches of daily <span class="magic-word" data-type="magic" title="Click me!">magic</span>.`,
+                    btn1: 'Say Hello',
+                    btn2: 'Read my Blog',
+                    footer: 'Made with love and chamomile tea 🌼',
+                    avatarTitle: 'Click to hack the theme!'
+                },
+                tech: {
+                    title: 'echo "Hello!"; 🚀',
+                    subtitle: `Welcome to my localhost! An environment fueled by optimized <span class="magic-word" data-type="code" title="Execute me!">code</span>, adventures in <span class="magic-word" data-type="servers" title="Execute me!">servers</span>, the soft hum of powerful <span class="magic-word" data-type="hardware" title="Execute me!">hardware</span>, and little touches of daily <span class="magic-word" data-type="gambiarra" title="Execute me!">hacks</span>.`,
+                    btn1: 'Ping IP',
+                    btn2: 'Read Docs',
+                    footer: 'Compiled with 0 errors, 0 warnings, and lots of coffee ☕',
+                    avatarTitle: 'Click to restore the theme!'
+                }
+            },
+            pt: {
+                cozy: {
+                    title: 'Olá, eu sou a Isabela Dias! ✨',
+                    subtitle: `Bem-vindo ao meu cantinho! Um espaço movido a <span class="magic-word" data-type="coffee" title="Clique em mim!">café</span> quentinho, aventuras escondidas em <span class="magic-word" data-type="books" title="Clique em mim!">livros</span>, o ronronar suave de <span class="magic-word" data-type="cats" title="Clique em mim!">gatos</span> fofos e pequenos toques de <span class="magic-word" data-type="magic" title="Clique em mim!">magia</span> diária.`,
+                    btn1: 'Dizer um Oi',
+                    btn2: 'Ler meu Blog',
+                    footer: 'Feito com carinho e chá camomila 🌼',
+                    avatarTitle: 'Clique para hackear o tema!'
+                },
+                tech: {
+                    title: 'echo "Olá!"; 🚀',
+                    subtitle: `Bem-vindo ao meu localhost! Um ambiente movido a <span class="magic-word" data-type="code" title="Execute-me!">código</span> otimizado, aventuras em <span class="magic-word" data-type="servers" title="Execute-me!">servidores</span>, o zumbido suave de <span class="magic-word" data-type="hardware" title="Execute-me!">hardware</span> potente e pequenos toques de <span class="magic-word" data-type="gambiarra" title="Execute-me!">gambiarras</span> diárias.`,
+                    btn1: 'Pingar IP',
+                    btn2: 'Ler Documentação',
+                    footer: 'Compilado com 0 erros, 0 avisos e muito café ☕',
+                    avatarTitle: 'Clique para restaurar o tema!'
+                }
+            }
+        };
+
+        let isTechTheme = false;
+        let currentLang = 'en'; // Inglês como default
+
+        // Elementos do DOM
+        const avatarBtn = document.getElementById('avatar-btn');
+        const langBtn = document.getElementById('lang-btn');
+        const titleText = document.getElementById('title-text');
+        const subtitleText = document.getElementById('subtitle-text');
+        const footerText = document.getElementById('footer-text');
+        const avatarImg = document.getElementById('avatar-img');
+        const bgIconContainer = document.getElementById('bg-icon-container');
+        const btnText1 = document.getElementById('btn-text-1');
+        const btnText2 = document.getElementById('btn-text-2');
+        const btnIcon1 = document.getElementById('btn-icon-1');
+        const btnIcon2 = document.getElementById('btn-icon-2');
+
+        // Função Central de Atualização de Conteúdo e Tema
+        function updateContent() {
+            const themeKey = isTechTheme ? 'tech' : 'cozy';
+            const data = contentDict[currentLang][themeKey];
+
+            // Atualiza Textos
+            titleText.innerHTML = data.title;
+            subtitleText.innerHTML = data.subtitle;
+            btnText1.innerText = data.btn1;
+            btnText2.innerText = data.btn2;
+            footerText.innerHTML = data.footer;
+            avatarBtn.title = data.avatarTitle;
+            document.documentElement.lang = currentLang;
+
+            // Atualiza Tema (Ícones e Avatares)
+            if (isTechTheme) {
+                document.body.classList.add('tech-theme');
+                avatarImg.src = 'https://api.dicebear.com/7.x/bottts/svg?seed=IsabelaTech&backgroundColor=0f172a';
+                bgIconContainer.innerHTML = '<i data-feather="terminal" width="100" height="100"></i>';
+                btnIcon1.innerHTML = '<i data-feather="terminal" width="18" height="18"></i>';
+                btnIcon2.innerHTML = '<i data-feather="code" width="18" height="18"></i>';
+            } else {
+                document.body.classList.remove('tech-theme');
+                avatarImg.src = 'https://api.dicebear.com/7.x/notionists/svg?seed=Isabela&backgroundColor=fdfbf7';
+                bgIconContainer.innerHTML = '<i data-feather="sun" width="100" height="100"></i>';
+                btnIcon1.innerHTML = '<i data-feather="mail" width="18" height="18"></i>';
+                btnIcon2.innerHTML = '<i data-feather="book-open" width="18" height="18"></i>';
+            }
+            
+            feather.replace();
+        }
+
+        // Lógica de Troca de Tema (Avatar)
+        avatarBtn.addEventListener('click', () => {
+            isTechTheme = !isTechTheme;
+            updateContent();
+        });
+
+        // Lógica de Troca de Idioma
+        langBtn.addEventListener('click', () => {
+            if (currentLang === 'en') {
+                currentLang = 'pt';
+                langBtn.innerText = '🇺🇸'; // Muda botão para sugerir inglês
+                langBtn.title = 'Switch to English';
+            } else {
+                currentLang = 'en';
+                langBtn.innerText = '🇧🇷'; // Muda botão para sugerir português
+                langBtn.title = 'Mudar para Português';
+            }
+            updateContent();
+        });
+
+        // Delegação de eventos para as palavras mágicas (permite que funcione mesmo após trocar o HTML)
+        document.body.addEventListener('click', (e) => {
+            const word = e.target.closest('.magic-word');
+            
+            if (word) {
+                e.preventDefault();
+                
+                const type = word.getAttribute('data-type');
+                
+                // Animação de pulo
+                word.classList.add('bounce');
+                setTimeout(() => word.classList.remove('bounce'), 300);
+
+                // Partículas
+                if(emojis[type]) {
+                    createParticles(e.clientX, e.clientY, emojis[type]);
+                }
+
+                // Animação lateral (só para café/coffee)
+                if (type === 'coffee') {
+                    triggerTeapotAnimation();
+                }
+            }
+        });
+
+        // Função para acionar a animação lateral
+        function triggerTeapotAnimation() {
+            const container = document.getElementById('teapot-container');
+            const teapot = document.getElementById('teapot-emoji');
+            const stream = document.getElementById('coffee-stream');
+
+            container.classList.remove('animate-container');
+            teapot.classList.remove('animate-teapot');
+            stream.classList.remove('animate-stream');
+
+            void container.offsetWidth; // Trigger reflow
+
+            container.classList.add('animate-container');
+            teapot.classList.add('animate-teapot');
+            stream.classList.add('animate-stream');
+        }
+
+        // Função para criar as partículas flutuantes
+        function createParticles(x, y, emojiArray) {
+            const numParticles = Math.floor(Math.random() * 5) + 6;
+
+            for(let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                particle.innerText = emojiArray[Math.floor(Math.random() * emojiArray.length)];
+                document.body.appendChild(particle);
+
+                const angle = Math.random() * Math.PI * 2; 
+                const velocity = 60 + Math.random() * 80; 
+                
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity - 40; 
+                const rot = (Math.random() - 0.5) * 200; 
+
+                particle.style.left = (x - 15) + 'px';
+                particle.style.top = (y - 15) + 'px';
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.setProperty('--rot', `${rot}deg`);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
