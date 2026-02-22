@@ -55,8 +55,8 @@ Currently, the projects are kept as simple, standalone HTML files. Running them 
 
 2. Open the project files directly in your favorite web browser:
 
-   - `personal-web-site.html`
-   - `slingshot.html`
+   - **`index.html`** — Personal website (home / hub)
+   - **`slingshot/index.html`** — Slingshot game
 
 That's it! 🎈
 
