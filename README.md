@@ -31,7 +31,19 @@ A clean and beautiful personal portfolio website.
 
 ![Personal Website](images/personal-website.png)
 
-### 2. 🎯 Slingshot Game
+### 2. 🍅 Pomodoro Timer
+
+A stylish Pomodoro timer application with a task notebook interface. Features include customizable timer duration, play/pause controls, break mode switching, task management with handwritten-style notes, pagination, language toggle (English/Portuguese), and dark/light theme support.
+
+- **Initial Prompting:** Kimi K2.5 and Windsurf 🌊
+- **Technologies:** HTML, Tailwind CSS, JavaScript
+- **Status:** Active Development 🔄
+
+**Screenshot:**
+
+![Pomodoro Timer](images/pomodoro.png)
+
+### 3. �🎯 Slingshot Game
 
 A fun, physics-based slingshot web game playable right in the browser.
 
@@ -56,6 +68,7 @@ Currently, the projects are kept as simple, standalone HTML files. Running them 
 2. Open the project files directly in your favorite web browser:
 
    - **`index.html`** — Personal website (home / hub)
+   - **`pomodoro/index.html`** — Pomodoro timer application
    - **`slingshot/index.html`** — Slingshot game
 
 That's it! 🎈

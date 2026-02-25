@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro - Foco e Produtividade</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cozy-bg': '#FDFBF7',
+                        'cozy-text': '#5C4A42',
+                        'cozy-accent': '#DDA77B',
+                        'cozy-pink': '#E29596',
+                        'cozy-green': '#8A9A86',
+                        'wood': '#C4A77D',
+                        'wood-dark': '#A68B5B',
+                        'paper': '#FEFCFA',
+                        'paper-line': '#E8E0D5',
+                        'ink': '#2C3E50',
+                        'pen-red': '#C0392B'
+                    },
+                    fontFamily: {
+                        'handwriting': ['Caveat', 'cursive'],
+                        'sans': ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #E8DDD4 0%, #D4C5B5 100%);
+            min-height: 100vh;
+        }
+
+        .wood-texture {
+            background: linear-gradient(180deg, #C4A77D 0%, #B89A6D 50%, #A68B5B 100%);
+            box-shadow: 
+                inset 0 2px 4px rgba(255,255,255,0.3),
+                inset 0 -2px 4px rgba(0,0,0,0.1),
+                0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .timer-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.1),
+                0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .circular-progress {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress circle {
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        .notebook {
+            background: #FEFCFA;
+            box-shadow: 
+                -5px 5px 15px rgba(0,0,0,0.1),
+                -1px 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            min-height: 520px;
+            max-height: 520px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notebook-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .notebook-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .notebook-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .notebook-content::-webkit-scrollbar-thumb {
+            background: #E8E0D5;
+            border-radius: 3px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-top: 1px solid #E8E0D5;
+            margin-top: auto;
+        }
+
+        .page-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #5C4A42;
+            padding: 4px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: rgba(221, 167, 123, 0.2);
+        }
+
+        .page-btn:disabled {
+            color: #B0A090;
+            cursor: not-allowed;
+        }
+
+        .page-indicator {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            color: #5C4A42;
+        }
+
+        .notebook::before {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 28px,
+                #E8E0D5 28px,
+                #E8E0D5 30px
+            );
+        }
+
+        .notebook-line {
+            border-bottom: 1px solid #E8E0D5;
+            min-height: 30px;
+            position: relative;
+        }
+
+        .task-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .task-item:hover {
+            background: rgba(221, 167, 123, 0.1);
+        }
+
+        .strike-through {
+            position: relative;
+            color: #888;
+        }
+
+        .strike-through::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(192, 57, 43, 0.1) 5%,
+                rgba(192, 57, 43, 0.9) 15%, 
+                rgba(231, 76, 60, 0.95) 50%, 
+                rgba(192, 57, 43, 0.9) 85%,
+                rgba(192, 57, 43, 0.1) 95%,
+                transparent 100%
+            );
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: strikeLine 0.5s ease forwards;
+            border-radius: 1px;
+        }
+
+        @keyframes strikeLine {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .strike-through.completed::after {
+            transform: scaleX(1);
+            animation: none;
+        }
+
+        .handwriting-input {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: #2C3E50;
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 2px 0;
+        }
+
+        .handwriting-input::placeholder {
+            color: #B0A090;
+            font-style: italic;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #8A9A86 0%, #7A8A76 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(138, 154, 134, 0.4);
+        }
+
+        .btn-pause {
+            background: linear-gradient(135deg, #E29596 0%, #D58586 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-pause:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(226, 149, 150, 0.4);
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #DDA77B 0%, #CD976B 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(221, 167, 123, 0.4);
+        }
+
+        .spiral-binding {
+            position: absolute;
+            left: -15px;
+            top: 20px;
+            bottom: 20px;
+            width: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            z-index: 10;
+        }
+
+        .spiral-ring {
+            width: 20px;
+            height: 12px;
+            background: linear-gradient(180deg, #A0A0A0 0%, #808080 50%, #606060 100%);
+            border-radius: 6px;
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.3),
+                0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .timer-input {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            color: #5C4A42;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid #E8E0D5;
+            border-radius: 8px;
+            padding: 6px 12px;
+            width: 70px;
+            text-align: center;
+        }
+
+        .timer-input:focus {
+            outline: none;
+            border-color: #DDA77B;
+            box-shadow: 0 0 0 3px rgba(221, 167, 123, 0.2);
+        }
+
+        .checkbox-custom {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #DDA77B;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-custom:checked {
+            background: #DDA77B;
+        }
+
+        .checkbox-custom:checked::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Dark Theme Styles */
+        body.dark-theme {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-theme .wood-texture {
+            background: linear-gradient(180deg, #2D2823 0%, #1E1A16 50%, #15120F 100%);
+        }
+
+        @media (max-width: 768px) {
+            .wood-texture {
+                padding: 1.5rem !important;
+            }
+            
+            .spiral-binding {
+                left: -10px;
+                width: 20px;
+            }
+            
+            .spiral-ring {
+                width: 15px;
+                height: 10px;
+            }
+        }
+
+        body.dark-theme .timer-container {
+            background: rgba(45, 40, 35, 0.98);
+        }
+
+        body.dark-theme .notebook {
+            background: #2A2520;
+        }
+
+        body.dark-theme .notebook::before {
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 28px,
+                #4A4540 28px,
+                #4A4540 30px
+            );
+        }
+
+        body.dark-theme .notebook-line {
+            border-bottom-color: #4A4540;
+        }
+
+        body.dark-theme .handwriting-input {
+            color: #D5CFC6;
+        }
+
+        body.dark-theme .handwriting-input::placeholder {
+            color: #7A756D;
+        }
+
+        body.dark-theme .timer-input {
+            background: rgba(50, 45, 40, 0.9);
+            border-color: #5A544D;
+            color: #D5CFC6;
+        }
+
+        body.dark-theme #timerDisplay,
+        body.dark-theme .text-cozy-text {
+            color: #D5CFC6 !important;
+        }
+
+        body.dark-theme .text-cozy-text\/70,
+        body.dark-theme .text-cozy-text\/60 {
+            color: rgba(213, 207, 198, 0.7) !important;
+        }
+
+        body.dark-theme .page-indicator {
+            color: #D5CFC6;
+        }
+
+        body.dark-theme .pagination {
+            border-top-color: #4A4540;
+        }
+
+        body.dark-theme .page-btn {
+            color: #D5CFC6;
+        }
+
+        body.dark-theme .page-btn:disabled {
+            color: #5A544D;
+        }
+
+        body.dark-theme .checkbox-custom {
+            border-color: #DDA77B;
+        }
+
+        body.dark-theme .strike-through {
+            color: #7A756D;
+        }
+
+        body.dark-theme #langToggle,
+        body.dark-theme #themeToggle {
+            background: rgba(60, 55, 50, 0.95);
+            color: #D5CFC6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        body.dark-theme #langToggle:hover,
+        body.dark-theme #themeToggle:hover {
+            background: rgba(80, 75, 70, 0.95);
+        }
+
+        body.dark-theme h2.font-handwriting {
+            color: #D5CFC6;
+        }
+
+        body.dark-theme .spiral-ring {
+            background: linear-gradient(180deg, #707070 0%, #505050 50%, #404040 100%);
+        }
+
+        body.dark-theme #resetBtn {
+            background: #4A4540;
+            color: #E8E0D5;
+            border-color: #5A544D;
+        }
+
+        body.dark-theme #resetBtn:hover {
+            background: #5A544D;
+        }
+
+        body.dark-theme .delete-btn {
+            color: rgba(213, 207, 198, 0.4);
+        }
+
+        body.dark-theme .delete-btn:hover {
+            color: #E74C3C;
+        }
+
+        body.dark-theme .notebook-content::-webkit-scrollbar-thumb {
+            background: #5A544D;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="wood-texture rounded-3xl p-8 md:p-12 max-w-5xl w-full relative">
+        <!-- Language and Theme Toggles -->
+        <div class="absolute top-4 right-4 flex gap-2">
+            <button 
+                id="langToggle" 
+                class="bg-white/80 text-cozy-text px-3 py-2 rounded-lg font-sans font-semibold text-sm flex items-center gap-2 hover:bg-white transition-all shadow-md"
+            >
+                <i data-feather="globe" class="w-4 h-4"></i>
+                <span id="langText">EN</span>
+            </button>
+            <button 
+                id="themeToggle" 
+                class="bg-white/80 text-cozy-text px-3 py-2 rounded-lg font-sans font-semibold text-sm flex items-center gap-2 hover:bg-white transition-all shadow-md"
+            >
+                <i data-feather="moon" class="w-4 h-4" id="themeIcon"></i>
+            </button>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="font-handwriting text-4xl md:text-5xl text-cozy-text mb-2">Meu Espaço de Foco</h1>
+            <p class="font-sans text-cozy-text/70 text-sm">Timer Pomodoro & Lista de Tarefas</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+            <!-- Timer Section -->
+            <div class="timer-container p-6 md:p-8 flex flex-col items-center order-1" style="min-height: 520px; max-height: 520px;">
+                <h2 class="font-sans text-xl font-semibold text-cozy-text mb-6">Timer Pomodoro</h2>
+                
+                <!-- Timer Configuration -->
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="font-sans text-sm text-cozy-text/70">Duração:</span>
+                    <input 
+                        type="number" 
+                        id="timerDuration" 
+                        class="timer-input" 
+                        value="25" 
+                        min="1" 
+                        max="60"
+                    >
+                    <span class="font-sans text-sm text-cozy-text/70">minutos</span>
+                </div>
+
+                <!-- Circular Timer -->
+                <div class="relative mb-8">
+                    <svg class="circular-progress w-48 h-48 md:w-56 md:h-56" viewBox="0 0 120 120">
+                        <circle 
+                            cx="60" 
+                            cy="60" 
+                            r="54" 
+                            fill="none" 
+                            stroke="#E8E0D5" 
+                            stroke-width="6"
+                        />
+                        <circle 
+                            id="progressCircle"
+                            cx="60" 
+                            cy="60" 
+                            r="54" 
+                            fill="none" 
+                            stroke="#DDA77B" 
+                            stroke-width="6"
+                            stroke-linecap="round"
+                            stroke-dasharray="339.292"
+                            stroke-dashoffset="0"
+                        />
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span id="timerDisplay" class="font-sans text-4xl md:text-5xl font-bold text-cozy-text">25:00</span>
+                    </div>
+                </div>
+
+                <!-- Timer Controls -->
+                <div class="flex flex-col sm:flex-row gap-3 items-center justify-center">
+                    <button 
+                        id="playBtn" 
+                        class="btn-play text-white px-6 py-3 rounded-full font-sans font-semibold flex items-center gap-2"
+                    >
+                        <i data-feather="play" class="w-5 h-5"></i>
+                        <span>Play</span>
+                    </button>
+                    <button 
+                        id="pauseBtn" 
+                        class="btn-pause text-white px-6 py-3 rounded-full font-sans font-semibold flex items-center gap-2 hidden"
+                    >
+                        <i data-feather="pause" class="w-5 h-5"></i>
+                        <span>Pausar</span>
+                    </button>
+                    <button 
+                        id="resetBtn" 
+                        class="bg-white text-cozy-text border-2 border-cozy-text/20 px-6 py-3 rounded-full font-sans font-semibold flex items-center gap-2 hover:bg-cozy-text/5 transition-all"
+                    >
+                        <i data-feather="rotate-ccw" class="w-5 h-5"></i>
+                        <span>Reset</span>
+                    </button>
+                    <button 
+                        id="breakBtn" 
+                        class="bg-cozy-green text-white px-6 py-3 rounded-full font-sans font-semibold flex items-center gap-2 hover:opacity-90 transition-all"
+                    >
+                        <span id="breakIconWrapper"><i data-feather="coffee" class="w-5 h-5"></i></span>
+                        <span id="breakText">Descanso</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notebook Tasks Section -->
+            <div class="relative order-2">
+                <!-- Spiral Binding -->
+                <div class="spiral-binding">
+                    <div class="spiral-ring"></div>
+                    <div class="spiral-ring"></div>
+                    <div class="spiral-ring"></div>
+                    <div class="spiral-ring"></div>
+                    <div class="spiral-ring"></div>
+                    <div class="spiral-ring"></div>
+                    <div class="spiral-ring"></div>
+                    <div class="spiral-ring"></div>
+                </div>
+
+                <div class="notebook rounded-r-2xl rounded-l-sm p-4 md:p-6" style="min-height: 520px; max-height: 520px;">
+                    <h2 class="font-handwriting text-3xl text-ink mb-4 pl-12">Minhas Tarefas</h2>
+                    
+                    <!-- Add Task Input -->
+                    <div class="notebook-line flex items-center gap-3 mb-4 pl-12 pr-4">
+                        <input 
+                            type="text" 
+                            id="taskInput" 
+                            class="handwriting-input" 
+                            placeholder="Digite uma nova tarefa..."
+                        >
+                        <button 
+                            id="addTaskBtn" 
+                            class="btn-add text-white px-4 py-2 rounded-full flex items-center justify-center"
+                        >
+                            <i data-feather="plus" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Task List with Scroll -->
+                    <div class="notebook-content">
+                        <div id="taskList" class="space-y-0">
+                            <!-- Tasks will be added here dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button id="prevPage" class="page-btn" disabled>
+                            <i data-feather="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        <span id="pageIndicator" class="page-indicator">Página 1 de 1</span>
+                        <button id="nextPage" class="page-btn" disabled>
+                            <i data-feather="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center mt-8">
+            <a href="../index.html" class="font-sans text-cozy-text/60 hover:text-cozy-text transition-colors text-sm">
+                ← Voltar para página inicial
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Timer Logic
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+        let totalTime = 25 * 60;
+        let isRunning = false;
+
+        const timerDisplay = document.getElementById('timerDisplay');
+        const progressCircle = document.getElementById('progressCircle');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const breakBtn = document.getElementById('breakBtn');
+        const breakIconWrapper = document.getElementById('breakIconWrapper');
+        const breakText = document.getElementById('breakText');
+        const timerDuration = document.getElementById('timerDuration');
+
+        const circumference = 2 * Math.PI * 54;
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = 0;
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const offset = circumference - (timeLeft / totalTime) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                playBtn.classList.add('hidden');
+                pauseBtn.classList.remove('hidden');
+                timerDuration.disabled = true;
+                
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateDisplay();
+                    } else {
+                        stopTimer();
+                        // Play notification sound or alert
+                        alert('Tempo esgotado! 🎉');
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                isRunning = false;
+                clearInterval(timerInterval);
+                playBtn.classList.remove('hidden');
+                pauseBtn.classList.add('hidden');
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            const minutes = parseInt(timerDuration.value) || 25;
+            totalTime = minutes * 60;
+            timeLeft = totalTime;
+            timerDuration.disabled = false;
+            updateDisplay();
+        }
+
+        function updateDuration() {
+            if (!isRunning) {
+                const minutes = parseInt(timerDuration.value) || 25;
+                totalTime = minutes * 60;
+                timeLeft = totalTime;
+                updateDisplay();
+            }
+        }
+
+        let isBreakMode = false;
+
+        function toggleBreakMode() {
+            pauseTimer();
+            
+            if (isBreakMode) {
+                // Voltar para modo foco (25 minutos)
+                timerDuration.value = 25;
+                totalTime = 25 * 60;
+                timeLeft = totalTime;
+                breakText.textContent = 'Descanso';
+                breakIconWrapper.innerHTML = '<i data-feather="coffee" class="w-5 h-5"></i>';
+                breakBtn.classList.remove('bg-cozy-accent');
+                breakBtn.classList.add('bg-cozy-green');
+                isBreakMode = false;
+            } else {
+                // Ir para modo descanso (5 minutos)
+                timerDuration.value = 5;
+                totalTime = 5 * 60;
+                timeLeft = totalTime;
+                breakText.textContent = 'Foco';
+                breakIconWrapper.innerHTML = '<i data-feather="target" class="w-5 h-5"></i>';
+                breakBtn.classList.remove('bg-cozy-green');
+                breakBtn.classList.add('bg-cozy-accent');
+                isBreakMode = true;
+            }
+            
+            updateDisplay();
+            feather.replace();
+        }
+
+        playBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        breakBtn.addEventListener('click', toggleBreakMode);
+        timerDuration.addEventListener('change', updateDuration);
+        timerDuration.addEventListener('input', updateDuration);
+
+        // Task List Logic
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const pageIndicator = document.getElementById('pageIndicator');
+
+        let tasks = JSON.parse(localStorage.getItem('pomodoroTasks')) || [];
+        let currentPage = 1;
+        const itemsPerPage = 8;
+
+        function saveTasks() {
+            localStorage.setItem('pomodoroTasks', JSON.stringify(tasks));
+        }
+
+        function getTotalPages() {
+            return Math.ceil(tasks.length / itemsPerPage) || 1;
+        }
+
+        function updatePagination() {
+            const totalPages = getTotalPages();
+            currentPage = Math.min(currentPage, totalPages);
+            currentPage = Math.max(1, currentPage);
+            
+            pageIndicator.textContent = `Página ${currentPage} de ${totalPages}`;
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages || tasks.length === 0;
+        }
+
+        function goToPrevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTasks();
+            }
+        }
+
+        function goToNextPage() {
+            const totalPages = getTotalPages();
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTasks();
+            }
+        }
+
+        function renderTasks() {
+            taskList.innerHTML = '';
+            
+            const totalPages = getTotalPages();
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, tasks.length);
+            const pageTasks = tasks.slice(startIndex, endIndex);
+            
+            pageTasks.forEach((task, idx) => {
+                const actualIndex = startIndex + idx;
+                const taskElement = document.createElement('div');
+                taskElement.className = `notebook-line task-item flex items-center gap-3 pl-12 pr-4 py-2 ${task.completed ? 'completed' : ''}`;
+                
+                taskElement.innerHTML = `
+                    <input 
+                        type="checkbox" 
+                        class="checkbox-custom"
+                        ${task.completed ? 'checked' : ''}
+                        data-index="${actualIndex}"
+                    >
+                    <span class="font-handwriting text-xl text-cozy-text flex-1 ${task.completed ? 'strike-through completed' : ''}">${task.text}</span>
+                    <button 
+                        class="delete-btn text-cozy-text/40 hover:text-pen-red transition-colors"
+                        data-index="${actualIndex}"
+                    >
+                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                    </button>
+                `;
+                
+                taskList.appendChild(taskElement);
+            });
+            
+            updatePagination();
+            feather.replace();
+            
+            // Add event listeners
+            document.querySelectorAll('.checkbox-custom').forEach(checkbox => {
+                checkbox.addEventListener('change', toggleTask);
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', deleteTask);
+            });
+        }
+
+        function addTask() {
+            const text = taskInput.value.trim();
+            if (text) {
+                tasks.push({ text, completed: false });
+                saveTasks();
+                currentPage = getTotalPages();
+                renderTasks();
+                taskInput.value = '';
+                taskInput.focus();
+            }
+        }
+
+        function toggleTask(e) {
+            const index = parseInt(e.target.dataset.index);
+            tasks[index].completed = e.target.checked;
+            saveTasks();
+            renderTasks();
+        }
+
+        function deleteTask(e) {
+            const index = parseInt(e.currentTarget.dataset.index);
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        }
+
+        addTaskBtn.addEventListener('click', addTask);
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        prevPageBtn.addEventListener('click', goToPrevPage);
+        nextPageBtn.addEventListener('click', goToNextPage);
+
+        // Language and Theme Logic
+        const langToggle = document.getElementById('langToggle');
+        const langText = document.getElementById('langText');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        let currentLang = localStorage.getItem('pomodoroLang') || 'en';
+        let isDarkTheme = localStorage.getItem('pomodoroDarkTheme') === 'true';
+
+        const translations = {
+            pt: {
+                title: 'Meu Espaço de Foco',
+                subtitle: 'Timer Pomodoro & Lista de Tarefas',
+                timerTitle: 'Timer Pomodoro',
+                duration: 'Duração:',
+                minutes: 'minutos',
+                play: 'Play',
+                pause: 'Pausar',
+                reset: 'Reset',
+                break: 'Descanso',
+                focus: 'Foco',
+                tasksTitle: 'Minhas Tarefas',
+                taskPlaceholder: 'Digite uma nova tarefa...',
+                pageIndicator: 'Página',
+                of: 'de',
+                backLink: '← Voltar para página inicial',
+                timeUp: 'Tempo esgotado! 🎉'
+            },
+            en: {
+                title: 'My Focus Space',
+                subtitle: 'Pomodoro Timer & Task List',
+                timerTitle: 'Pomodoro Timer',
+                duration: 'Duration:',
+                minutes: 'minutes',
+                play: 'Play',
+                pause: 'Pause',
+                reset: 'Reset',
+                break: 'Break',
+                focus: 'Focus',
+                tasksTitle: 'My Tasks',
+                taskPlaceholder: 'Type a new task...',
+                pageIndicator: 'Page',
+                of: 'of',
+                backLink: '← Back to home page',
+                timeUp: 'Time is up! 🎉'
+            }
+        };
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            
+            // Header
+            const titleEl = document.querySelector('h1.font-handwriting');
+            const subtitleEl = document.querySelector('.text-cozy-text\\/70');
+            if (titleEl) titleEl.textContent = t.title;
+            if (subtitleEl) subtitleEl.textContent = t.subtitle;
+            
+            // Timer title
+            const timerTitleEl = document.querySelector('.timer-container h2');
+            if (timerTitleEl) timerTitleEl.textContent = t.timerTitle;
+            
+            // Timer configuration labels - usando seletores mais específicos
+            const timerConfigDiv = document.querySelector('#timerDuration').closest('.flex');
+            if (timerConfigDiv) {
+                const spans = timerConfigDiv.querySelectorAll('span');
+                if (spans[0]) spans[0].textContent = t.duration;
+                if (spans[1]) spans[1].textContent = t.minutes;
+            }
+            
+            // Buttons
+            const playSpan = document.querySelector('#playBtn span');
+            const pauseSpan = document.querySelector('#pauseBtn span');
+            const resetSpan = document.querySelector('#resetBtn span');
+            
+            if (playSpan) playSpan.textContent = t.play;
+            if (pauseSpan) pauseSpan.textContent = t.pause;
+            if (resetSpan) resetSpan.textContent = t.reset;
+            
+            // Break button text based on mode
+            if (breakText) {
+                if (isBreakMode) {
+                    breakText.textContent = t.focus;
+                } else {
+                    breakText.textContent = t.break;
+                }
+            }
+            
+            // Notebook
+            const notebookTitle = document.querySelector('.notebook h2');
+            if (notebookTitle) notebookTitle.textContent = t.tasksTitle;
+            
+            if (taskInput) taskInput.placeholder = t.taskPlaceholder;
+            
+            // Pagination
+            const totalPages = getTotalPages();
+            if (pageIndicator) {
+                pageIndicator.textContent = `${t.pageIndicator} ${currentPage} ${t.of} ${totalPages}`;
+            }
+            
+            // Back link
+            const backLink = document.querySelector('a[href="../index.html"]');
+            if (backLink) backLink.textContent = t.backLink;
+            
+            // Language button
+            if (langText) langText.textContent = currentLang === 'pt' ? 'EN' : 'PT';
+            
+            // Re-render feather icons
+            feather.replace();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'pt' ? 'en' : 'pt';
+            localStorage.setItem('pomodoroLang', currentLang);
+            updateLanguage();
+            updatePagination();
+        }
+
+        function updateTheme() {
+            if (isDarkTheme) {
+                document.body.classList.add('dark-theme');
+                themeIcon.setAttribute('data-feather', 'sun');
+            } else {
+                document.body.classList.remove('dark-theme');
+                themeIcon.setAttribute('data-feather', 'moon');
+            }
+            feather.replace();
+        }
+
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            localStorage.setItem('pomodoroDarkTheme', isDarkTheme);
+            updateTheme();
+        }
+
+        // Initialize
+        if (isDarkTheme) {
+            document.body.classList.add('dark-theme');
+        }
+        
+        langToggle.addEventListener('click', toggleLanguage);
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        updateLanguage();
+        updateTheme();
+
+        // Initial render
+        renderTasks();
+        updateDisplay();
+    </script>
+</body>
+</html>
