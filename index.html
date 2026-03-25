@@ -1,574 +1,921 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isabela Dias | A Cozy Corner</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Feather Icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isabela's Lab ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cozy-bg': '#FDFBF7',
-                        'cozy-text': '#5C4A42',
-                        'cozy-accent': '#DDA77B',
-                        'cozy-pink': '#E29596',
-                        'cozy-green': '#8A9A86'
-                    },
-                    fontFamily: {
-                        'handwriting': ['Caveat', 'cursive'],
-                        'sans': ['Nunito', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+  <style>
+    /* ===================== THEME VARIABLES ===================== */
+    :root {
+      --bg:              #FDFBF7;
+      --dot:             rgba(221,167,123,0.45);
+      --surface:         rgba(255,255,255,0.88);
+      --surface-solid:   #F5EFE4;
+      --border:          rgba(221,167,123,0.28);
+      --text:            #5C4A42;
+      --text-muted:      #9B8B80;
+      --accent:          #DDA77B;
+      --accent-h:        #C8905F;
+      --accent2:         #E29596;
+      --accent3:         #8A9A86;
+      --tag-bg:          rgba(221,167,123,0.13);
+      --tag-color:       #A07050;
+      --card-bg:         rgba(255,255,255,0.92);
+      --card-border:     rgba(221,167,123,0.22);
+      --card-shadow:     0 4px 24px rgba(92,74,66,0.07);
+      --card-hover-shadow: 0 8px 32px rgba(221,167,123,0.22);
+      --overlay-bg:      rgba(55,35,25,0.84);
+      --modal-backdrop:  rgba(0,0,0,0.45);
+      --header-bg:       rgba(253,251,247,0.93);
+    }
 
-    <style>
-        /* Transições suaves gerais */
-        body, main, h1, p, div, img, button {
-            transition: all 0.5s ease;
-        }
+    [data-theme="dark"] {
+      --bg:              #0f172a;
+      --dot:             rgba(6,182,212,0.22);
+      --surface:         rgba(15,23,42,0.92);
+      --surface-solid:   #1e293b;
+      --border:          rgba(6,182,212,0.16);
+      --text:            #e2e8f0;
+      --text-muted:      #64748b;
+      --accent:          #06b6d4;
+      --accent-h:        #0891b2;
+      --accent2:         #a78bfa;
+      --accent3:         #6ee7b7;
+      --tag-bg:          rgba(6,182,212,0.1);
+      --tag-color:       #06b6d4;
+      --card-bg:         rgba(30,41,59,0.96);
+      --card-border:     rgba(6,182,212,0.13);
+      --card-shadow:     0 4px 24px rgba(0,0,0,0.32);
+      --card-hover-shadow: 0 8px 32px rgba(6,182,212,0.18);
+      --overlay-bg:      rgba(8,12,24,0.88);
+      --modal-backdrop:  rgba(0,0,0,0.68);
+      --header-bg:       rgba(15,23,42,0.96);
+    }
 
-        body {
-            background-color: #FDFBF7;
-            background-image: radial-gradient(#DDA77B 0.5px, transparent 0.5px);
-            background-size: 30px 30px;
-            color: #5C4A42;
-        }
+    /* ===================== BASE ===================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-        /* --- TEMA TECNOLÓGICO (CYBER) --- */
-        body.tech-theme {
-            background-color: #0f172a;
-            background-image: radial-gradient(#06b6d4 0.8px, transparent 0.8px);
-            color: #e2e8f0;
-            font-family: 'Courier New', Courier, monospace;
-        }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--dot) 0.6px, transparent 0.6px);
+      background-size: 28px 28px;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.5s, color 0.5s;
+    }
 
-        body.tech-theme .bg-white\/80 {
-            background-color: rgba(15, 23, 42, 0.85) !important;
-            border-color: #06b6d4 !important;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15) !important;
-        }
+    /* ===================== HEADER ===================== */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.5s, border-color 0.5s;
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .site-logo {
+      font-family: 'Caveat', cursive;
+      font-size: 1.65rem; font-weight: 700;
+      color: var(--text); text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem;
+      transition: opacity 0.2s;
+    }
+    .site-logo:hover { opacity: 0.8; }
+    .logo-accent { color: var(--accent); }
+    .header-controls { display: flex; align-items: center; gap: 0.5rem; }
+    .ctrl-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.4rem 0.85rem;
+      background: var(--surface-solid);
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.8rem; font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+    .ctrl-btn:hover {
+      background: var(--accent); border-color: var(--accent);
+      color: white; transform: translateY(-1px);
+    }
+    .ctrl-btn svg { width: 13px; height: 13px; }
 
-        body.tech-theme .text-cozy-text {
-            color: #06b6d4 !important;
-            font-family: 'Courier New', Courier, monospace !important;
-        }
-        
-        body.tech-theme h1.text-cozy-text {
-            text-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
-        }
+    /* ===================== HERO ===================== */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 3.5rem 1.5rem 2.5rem;
+      display: flex; align-items: center; gap: 2.5rem;
+    }
+    @media (max-width: 640px) {
+      .hero { flex-direction: column; text-align: center; padding: 2rem 1.25rem 1.75rem; gap: 1.5rem; }
+    }
+    .avatar-wrap { flex-shrink: 0; position: relative; cursor: pointer; }
+    .avatar-wrap img {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      border: 3.5px solid var(--accent);
+      object-fit: cover;
+      background: var(--surface-solid);
+      animation: float 6s ease-in-out infinite;
+      transition: border-color 0.5s, box-shadow 0.3s;
+    }
+    .avatar-wrap:hover img {
+      box-shadow: 0 0 0 5px var(--accent), 0 0 22px rgba(221,167,123,0.3);
+    }
+    [data-theme="dark"] .avatar-wrap:hover img {
+      box-shadow: 0 0 0 5px var(--accent), 0 0 22px rgba(6,182,212,0.35);
+    }
+    .avatar-ring {
+      position: absolute; inset: -8px; border-radius: 50%;
+      border: 2px dashed var(--accent); opacity: 0.35;
+      animation: spin 22s linear infinite; pointer-events: none;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes spin  { to{transform:rotate(360deg)} }
 
-        body.tech-theme .text-cozy-text\/80 {
-            color: #cbd5e1 !important;
-        }
+    .hero-content h1 {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(2rem, 5vw, 3rem); font-weight: 700;
+      color: var(--text); line-height: 1.2; margin-bottom: 0.6rem;
+      transition: color 0.5s;
+    }
+    .hero-content h1 .accent { color: var(--accent); }
+    .hero-content p {
+      font-size: 1rem; line-height: 1.75;
+      color: var(--text-muted); max-width: 480px;
+      transition: color 0.5s;
+    }
+    @media (max-width: 640px) { .hero-content p { margin: 0 auto; } }
 
-        body.tech-theme .text-cozy-accent {
-            color: #06b6d4 !important;
-        }
+    .magic-word {
+      font-weight: 700; color: var(--accent2); cursor: pointer;
+      text-decoration: underline wavy var(--accent2);
+      text-decoration-thickness: 2px; text-underline-offset: 3px;
+      transition: all 0.2s; display: inline-block;
+    }
+    .magic-word:hover { color: var(--accent); text-decoration-color: var(--accent); transform: translateY(-1px); }
+    [data-theme="dark"] .magic-word { color: var(--accent); text-decoration-color: var(--accent); }
+    [data-theme="dark"] .magic-word:hover { color: var(--accent2); text-shadow: 0 0 8px var(--accent); }
 
-        /* Botões no Tema Tech */
-        body.tech-theme .bg-cozy-text.text-white {
-            background-color: #06b6d4 !important;
-            color: #0f172a !important;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
-        body.tech-theme .bg-cozy-text.text-white:hover {
-            background-color: #22d3ee !important;
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
-        }
+    .hero-actions {
+      display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap;
+    }
+    @media (max-width: 640px) { .hero-actions { justify-content: center; } }
 
-        body.tech-theme .bg-white.text-cozy-text {
-            background-color: transparent !important;
-            border-color: #06b6d4 !important;
-            color: #06b6d4 !important;
-        }
-        body.tech-theme .bg-white.text-cozy-text:hover {
-            background-color: rgba(6, 182, 212, 0.15) !important;
-        }
+    .action-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.5rem 1.1rem; border-radius: 999px;
+      font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: all 0.2s; touch-action: manipulation;
+    }
+    .action-btn.primary { background: var(--accent); color: white; }
+    .action-btn.primary:hover {
+      background: var(--accent-h); transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(221,167,123,0.38);
+    }
+    [data-theme="dark"] .action-btn.primary:hover {
+      box-shadow: 0 4px 14px rgba(6,182,212,0.38);
+    }
+    .action-btn.ghost {
+      background: var(--surface-solid);
+      border: 1.5px solid var(--border); color: var(--text-muted);
+    }
+    .action-btn.ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .action-btn svg { width: 15px; height: 15px; }
+    .action-btn[disabled] { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
-        /* Palavras Interativas no Tema Tech */
-        body.tech-theme .magic-word {
-            color: #22d3ee !important;
-            text-decoration-color: #22d3ee !important;
-            text-decoration-style: dashed !important;
-        }
-        body.tech-theme .magic-word:hover {
-            color: #fff !important;
-            text-shadow: 0 0 10px #22d3ee;
-        }
+    /* ===================== DIVIDER ===================== */
+    .section-divider {
+      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+      border: none; border-top: 1px solid var(--border); transition: border-color 0.5s;
+    }
 
-        /* Elementos do Avatar no Tema Tech */
-        body.tech-theme .bg-cozy-pink {
-            background-color: #06b6d4 !important;
-        }
-        body.tech-theme .border-white {
-            border-color: #06b6d4 !important;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5) !important;
-        }
-        body.tech-theme .bg-cozy-bg {
-            background-color: #0f172a !important;
-        }
+    /* ===================== LAB SECTION ===================== */
+    .lab-section { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+    .section-heading {
+      display: flex; align-items: baseline; flex-wrap: wrap;
+      gap: 0.75rem; margin-bottom: 1.5rem;
+    }
+    .section-heading h2 {
+      font-family: 'Caveat', cursive; font-size: 2rem; font-weight: 700;
+      color: var(--text); transition: color 0.5s;
+    }
+    .section-comment {
+      font-family: 'Courier New', monospace; font-size: 0.85rem;
+      color: var(--accent3); opacity: 0.75;
+    }
+    [data-theme="dark"] .section-comment { color: var(--accent); opacity: 0.6; }
 
-        /* Botão de Idioma no Tema Tech */
-        body.tech-theme #lang-btn {
-            background-color: rgba(15, 23, 42, 0.85);
-            border-color: #06b6d4;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
+    /* ===================== FILTERS ===================== */
+    .filters-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .filter-pill {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      padding: 0.35rem 0.9rem;
+      background: var(--surface-solid);
+      border: 1.5px solid var(--border); border-radius: 999px;
+      color: var(--text-muted);
+      font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; touch-action: manipulation;
+    }
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--accent); border-color: var(--accent); color: white;
+    }
 
-        /* Botões de Redes Sociais no Tema Tech */
-        body.tech-theme .bg-cozy-accent\/20 {
-            background-color: rgba(6, 182, 212, 0.2) !important;
-        }
-        body.tech-theme .bg-cozy-accent\/20:hover {
-            background-color: rgba(6, 182, 212, 0.3) !important;
-        }
+    /* ===================== CARDS ===================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 18px; overflow: hidden; cursor: pointer;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-hover-shadow);
+      border-color: var(--accent);
+    }
 
-        /* Estilo para as palavras interativas (Base/Aconchegante) */
-        .magic-word {
-            position: relative;
-            display: inline-block;
-            font-weight: 700;
-            color: #E29596;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: underline wavy #E29596;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
-        }
+    /* Preview image */
+    .card-preview { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+    .card-preview img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.4s;
+    }
+    .project-card:hover .card-preview img { transform: scale(1.06); }
 
-        .magic-word:hover {
-            color: #DDA77B;
-            text-decoration-color: #DDA77B;
-            transform: translateY(-2px);
-        }
+    /* Emoji placeholder */
+    .card-preview-emoji {
+      aspect-ratio: 16/9; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface-solid); font-size: 4rem;
+    }
 
-        /* Animação de pulsar para indicar interatividade */
-        @keyframes pulse-soft {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .magic-word.bounce {
-            animation: pulse-soft 0.3s ease-in-out;
-        }
+    /* Hover overlay */
+    .card-overlay {
+      position: absolute; inset: 0; background: var(--overlay-bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 1.25rem; text-align: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .project-card:hover .card-overlay { opacity: 1; }
+    .overlay-short-desc {
+      color: rgba(255,255,255,0.92); font-size: 0.875rem;
+      line-height: 1.55; margin-bottom: 0.8rem;
+    }
+    .overlay-cta { color: #fbbf7a; font-size: 0.78rem; font-weight: 700; }
+    [data-theme="dark"] .overlay-cta { color: #67e8f9; }
 
-        /* Estilo das partículas da animação fofa */
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 50;
-            font-size: 1.5rem;
-            animation: float-away 1s ease-out forwards;
-        }
+    /* Status badge */
+    .status-badge {
+      position: absolute; top: 0.65rem; right: 0.65rem; z-index: 2;
+      padding: 0.2rem 0.65rem; border-radius: 999px;
+      font-size: 0.68rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .status-live    { background: #10b981; color: white; }
+    .status-wip     { background: #f59e0b; color: white; }
+    .status-planned { background: #8b5cf6; color: white; }
 
-        @keyframes float-away {
-            0% {
-                transform: translate(0, 0) scale(0.5) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(var(--rot));
-                opacity: 0;
-            }
-        }
+    /* Card body */
+    .card-body { padding: 1rem 1.25rem 1.25rem; }
+    .card-title-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.55rem; }
+    .card-emoji { font-size: 1.25rem; line-height: 1; }
+    .card-title-row h3 { font-size: 1rem; font-weight: 700; color: var(--text); transition: color 0.5s; }
+    .tags-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag-pill {
+      background: var(--tag-bg); color: var(--tag-color);
+      padding: 0.15rem 0.55rem; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 700;
+      transition: background 0.3s, color 0.3s;
+    }
+    .empty-state {
+      grid-column: 1/-1; text-align: center;
+      padding: 3.5rem 1rem; color: var(--text-muted);
+    }
+    .empty-state .big-emoji { font-size: 3.5rem; margin-bottom: 0.75rem; }
 
-        /* Animação da imagem de perfil */
-        .profile-img {
-            animation: float 6s ease-in-out infinite;
-        }
+    /* ===================== MODAL ===================== */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: var(--modal-backdrop);
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: var(--bg);
+      border: 1.5px solid var(--border); border-radius: 22px;
+      max-width: 560px; width: 100%; max-height: 90vh;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+      transform: scale(0.95) translateY(14px);
+      transition: transform 0.3s;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+    }
+    .modal-backdrop.open .modal-box { transform: scale(1) translateY(0); }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
+    .modal-img {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+      border-radius: 18px 18px 0 0;
+    }
+    .modal-emoji-placeholder {
+      width: 100%; aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface-solid); font-size: 5rem;
+      border-radius: 18px 18px 0 0;
+    }
+    .modal-body { padding: 1.5rem 1.75rem 1.75rem; }
+    .modal-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .modal-title-row { display: flex; align-items: center; gap: 0.6rem; }
+    .modal-emoji { font-size: 2rem; line-height: 1; }
+    .modal-title {
+      font-family: 'Caveat', cursive; font-size: 1.6rem; font-weight: 700;
+      color: var(--text);
+    }
+    .modal-close-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--surface-solid); border: 1.5px solid var(--border);
+      color: var(--text-muted); cursor: pointer; flex-shrink: 0;
+      transition: all 0.2s; touch-action: manipulation;
+    }
+    .modal-close-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+    .modal-close-btn svg { width: 14px; height: 14px; }
+    .modal-description {
+      color: var(--text-muted); font-size: 0.925rem; line-height: 1.72;
+      margin-bottom: 1.25rem; transition: color 0.5s;
+    }
+    .modal-meta-section { margin-bottom: 1rem; }
+    .meta-label {
+      font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.4rem;
+    }
+    .modal-actions {
+      margin-top: 1.5rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+    }
 
-        /* Animações do Bule Lateral */
-        .coffee-pour-wrapper {
-            min-width: 100px;
-        }
-        /* Café: linha reta caindo com fade no final */
-        .coffee-stream {
-            position: absolute;
-            top: -10px;
-            left: 32px;
-            width: 8px;
-            height: 0;
-            background-color: #6b4c3a;
-            border-radius: 4px;
-            opacity: 0;
-            z-index: 10;
-        }
-        .animate-stream {
-            animation: pour-stream 6s ease-in-out forwards;
-        }
-        @keyframes pour-stream {
-            0%, 30% { height: 0; opacity: 0; }
-            38% { opacity: 1; height: 38px; }
-            58% { height: 38px; opacity: 1; }
-            68%, 100% { height: 38px; opacity: 0; }
-        }
-        /* Fumaça: centralizada em cima da xícara */
-        .steam-container {
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 52px;
-            height: 40px;
-            justify-content: center;
-            align-items: flex-start;
-            z-index: 25;
-            overflow: visible;
-        }
-        .steam-wisp {
-            display: block;
-            width: 14px;
-            height: 24px;
-            border-radius: 50%;
-            background: radial-gradient(ellipse at center, rgba(90, 90, 100, 0.55) 0%, rgba(70, 70, 80, 0.2) 45%, transparent 100%);
-            filter: blur(5px);
-            opacity: 0;
-        }
-        body.tech-theme .steam-wisp {
-            background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0.1) 45%, transparent 100%);
-        }
+    /* ===================== PARTICLES ===================== */
+    #particles-layer { position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden; }
+    .particle {
+      position: absolute; pointer-events: none;
+      animation: particle-fly 1.1s ease-out forwards;
+    }
+    @keyframes particle-fly {
+      0%   { opacity: 1; transform: translate(0,0) scale(0.7) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--dx),var(--dy)) scale(1.1) rotate(var(--rot)); }
+    }
 
-        /* Duração total ~6s para o café cair mais devagar */
-        .animate-container {
-            animation: slide-in-out 6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        .animate-teapot {
-            animation: tilt-teapot 6s ease-in-out forwards;
-        }
-        .steam-container.animate-steam .steam-wisp:nth-child(1) { animation: steam-rise 3s ease-in-out 0.8s forwards; }
-        .steam-container.animate-steam .steam-wisp:nth-child(2) { animation: steam-rise 3.2s ease-in-out 1.4s forwards; }
-        .steam-container.animate-steam .steam-wisp:nth-child(3) { animation: steam-rise 2.8s ease-in-out 2s forwards; }
+    /* ===================== TEAPOT ===================== */
+    .coffee-stream {
+      position: absolute; top: -10px; left: 32px;
+      width: 8px; height: 0;
+      background-color: #6b4c3a; border-radius: 4px;
+      opacity: 0; z-index: 10;
+    }
+    [data-theme="dark"] .coffee-stream { background-color: #06b6d4; }
+    .animate-stream { animation: pour-stream 6s ease-in-out forwards; }
+    @keyframes pour-stream {
+      0%,30%  { height:0; opacity:0; }
+      38%     { opacity:1; height:38px; }
+      58%     { height:38px; opacity:1; }
+      68%,100%{ height:38px; opacity:0; }
+    }
+    .steam-container {
+      top:-6px; left:50%; transform:translateX(-50%);
+      width:52px; height:40px; overflow:visible; z-index:25;
+    }
+    .steam-wisp {
+      display:block; width:14px; height:24px; border-radius:50%;
+      background:radial-gradient(ellipse at center,rgba(90,90,100,.55) 0%,rgba(70,70,80,.2) 45%,transparent 100%);
+      filter:blur(5px); opacity:0;
+    }
+    [data-theme="dark"] .steam-wisp {
+      background:radial-gradient(ellipse at center,rgba(6,182,212,.45) 0%,rgba(6,182,212,.1) 45%,transparent 100%);
+    }
+    .animate-container { animation:slide-in-out 6s cubic-bezier(.34,1.56,.64,1) forwards; }
+    .animate-teapot    { animation:tilt-teapot 6s ease-in-out forwards; }
+    .steam-container.animate-steam .steam-wisp:nth-child(1){ animation:steam-rise 3s ease-in-out .8s forwards; }
+    .steam-container.animate-steam .steam-wisp:nth-child(2){ animation:steam-rise 3.2s ease-in-out 1.4s forwards; }
+    .steam-container.animate-steam .steam-wisp:nth-child(3){ animation:steam-rise 2.8s ease-in-out 2s forwards; }
+    @keyframes slide-in-out  { 0%,100%{right:-200px} 12%,88%{right:20px} }
+    @keyframes tilt-teapot   { 0%,18%,82%,100%{transform:translateY(0) rotate(0deg)} 32%,68%{transform:translateY(-15px) translateX(-5px) rotate(-35deg)} }
+    @keyframes steam-rise    { 0%{transform:translateY(0) translateX(0) scale(1);opacity:0} 12%{opacity:.6} 70%{opacity:.18} 100%{transform:translateY(-36px) translateX(5px) scale(1.2);opacity:0} }
 
-        @keyframes slide-in-out {
-            0%, 100% { right: -200px; }
-            12%, 88% { right: 20px; }
-        }
-        @keyframes tilt-teapot {
-            0%, 18%, 82%, 100% { transform: translateY(0) rotate(0deg); }
-            32%, 68% { transform: translateY(-15px) translateX(-5px) rotate(-35deg); }
-        }
-        /* Fumaça sobe suave e some (bem visível = café quente) */
-        @keyframes steam-rise {
-            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-            12% { opacity: 0.6; }
-            70% { opacity: 0.18; }
-            100% { transform: translateY(-36px) translateX(5px) scale(1.2); opacity: 0; }
-        }
-    </style>
+    /* ===================== FOOTER ===================== */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 1.5rem 1rem;
+      color: var(--text-muted); font-size: 0.8rem;
+      transition: color 0.5s, border-color 0.5s;
+    }
+
+    /* ===================== SCROLLBAR ===================== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col justify-center items-center p-6 antialiased font-sans selection:bg-cozy-pink selection:text-white overflow-x-hidden transition-colors duration-500">
+<body>
 
-    <!-- Botão de Idioma -->
-    <button id="lang-btn" class="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-md border border-cozy-accent/30 text-2xl p-2 rounded-full shadow-sm hover:scale-110 transition-transform duration-300" title="Switch to Portuguese">
-        🇧🇷
-    </button>
-
-    <main class="max-w-2xl w-full bg-white/80 backdrop-blur-sm p-10 md:p-16 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-cozy-bg text-center relative overflow-hidden transition-all duration-500">
-        
-        <!-- Decoração de fundo -->
-        <div id="bg-icon-container" class="absolute top-[-20px] left-[-20px] text-cozy-accent opacity-20 transform -rotate-12 transition-all duration-500">
-            <i data-feather="sun" width="100" height="100"></i>
-        </div>
-        
-        <!-- Foto/Avatar (Agora clicável para mudar o tema!) -->
-        <div id="avatar-btn" class="relative w-32 h-32 mx-auto mb-6 profile-img cursor-pointer hover:scale-105 transition-transform duration-300" title="Click to hack the theme!">
-            <div id="avatar-glow" class="absolute inset-0 bg-cozy-pink rounded-full opacity-20 blur-lg transition-colors duration-500"></div>
-            <img id="avatar-img" src="https://api.dicebear.com/7.x/notionists/svg?seed=Isabela&backgroundColor=fdfbf7" alt="Avatar of Isabela" class="rounded-full w-full h-full object-cover border-4 border-white shadow-md relative z-10 bg-cozy-bg transition-colors duration-500">
-        </div>
-
-        <!-- Botões de Redes Sociais -->
-        <div class="flex justify-center gap-3 mb-6">
-            <a href="https://www.linkedin.com/in/isabelamarques07/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cozy-accent/20 hover:bg-cozy-accent/30 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group">
-                <svg class="w-5 h-5 text-cozy-text transition-colors duration-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-            </a>
-            <a href="https://substack.com/@backendtobasics" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cozy-accent/20 hover:bg-cozy-accent/30 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group">
-                <svg class="w-5 h-5 text-cozy-text transition-colors duration-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l10.54-6.52L22.539 24V10.812H1.46zM11.999 14.67l-8.48 5.23v-10.46l8.48 5.23zm8.482-5.23v10.46l-8.482-5.23 8.482-5.23z"/>
-                </svg>
-            </a>
-        </div>
-
-        <!-- Nome -->
-        <h1 id="title-text" class="text-5xl md:text-6xl font-handwriting text-cozy-text mb-4 transition-colors duration-500">
-            Hi, I'm Isabela Dias! ✨
-        </h1>
-
-        <!-- Subtítulo Aconchegante e Interativo -->
-        <p id="subtitle-text" class="text-xl md:text-2xl leading-relaxed text-cozy-text/80 mb-10 max-w-lg mx-auto transition-colors duration-500">
-            Welcome to my corner! A space fueled by warm 
-            <span class="magic-word" data-type="coffee" title="Click me!">coffee</span>, 
-            adventures hidden in 
-            <span class="magic-word" data-type="books" title="Click me!">books</span>, 
-            the soft purring of cute 
-            <span class="magic-word" data-type="cats" title="Click me!">cats</span>, and 
-            little touches of daily 
-            <span class="magic-word" data-type="magic" title="Click me!">magic</span>.
-        </p>
-
-        <!-- Botão/Links -->
-        <div class="flex justify-center gap-4">
-            <a id="btn-link-1" href="./pomodoro/index.html" class="px-6 py-3 bg-cozy-text text-white rounded-full font-semibold transition-all duration-300 shadow-sm flex items-center gap-2">
-                <span id="btn-icon-1"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0-1.1.9-2 2-2 3.3 0 6 2.7 6 6 0 1.1-.9 2-2 2-3.3 0-6-2.7-6-6z"/><path d="M12 2c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10c0-2.5-1-4.8-2.6-6.5C17.8 4.8 15.5 4 13 4c-2.5 0-4.8 1-6.5 2.6"/></svg></span>
-                <span id="btn-text-1">Pomodoro</span>
-            </a>
-            <a id="btn-link-2" href="https://backendtobasics.substack.com/" target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-white text-cozy-text border border-cozy-accent/30 rounded-full font-semibold transition-all duration-300 shadow-sm flex items-center gap-2">
-                <span id="btn-icon-2"><i data-feather="book-open" width="18" height="18"></i></span>
-                <span id="btn-text-2">Read my Blog</span>
-            </a>
-        </div>
-
-    </main>
-
-    <!-- Rodapé -->
-    <footer id="footer-text" class="mt-12 text-center text-cozy-text/60 text-sm font-medium transition-colors duration-500">
-        Made with love and chamomile tea 🌼
-    </footer>
-
-    <!-- Elementos da Animação do Bule Lateral -->
-    <div id="teapot-container" class="fixed bottom-10 right-[-200px] z-50 flex items-end justify-center pointer-events-none">
-        <div class="coffee-pour-wrapper relative flex items-end justify-center gap-0 mb-2 overflow-visible">
-            <!-- Xícara + linha de café + fumaça -->
-            <div class="relative overflow-visible w-fit">
-                <div class="text-6xl relative z-0">☕</div>
-                <div id="coffee-stream" class="coffee-stream"></div>
-                <div id="steam-container" class="steam-container absolute flex justify-center gap-1 pointer-events-none z-10">
-                    <span class="steam-wisp"></span>
-                    <span class="steam-wisp"></span>
-                    <span class="steam-wisp"></span>
-                </div>
-            </div>
-            <div id="teapot-emoji" class="text-7xl origin-[20%_80%] z-20 -ml-4">🫖</div>
-        </div>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="site-logo">🧪 <span class="logo-accent">Isabela's</span> Lab</a>
+      <div class="header-controls">
+        <button class="ctrl-btn" id="themeToggle" aria-label="Toggle theme">
+          <i data-feather="moon" id="themeIcon"></i>
+          <span id="themeLabel">dark</span>
+        </button>
+        <button class="ctrl-btn" id="langToggle" aria-label="Toggle language">
+          <span id="langLabel">PT</span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <!-- Lógica JavaScript -->
-    <script>
-        // Inicializa os ícones do Feather Icons
-        feather.replace();
+  <!-- HERO -->
+  <section class="hero">
+    <div class="avatar-wrap" id="avatarBtn" title="click me!">
+      <div class="avatar-ring"></div>
+      <img id="avatarImg"
+        src="https://api.dicebear.com/7.x/notionists/svg?seed=Isabela&backgroundColor=fdfbf7"
+        alt="Isabela's avatar">
+    </div>
+    <div class="hero-content">
+      <h1 id="heroH1">Hi, I'm <span class="accent">Isabela</span>! ✨</h1>
+      <p id="heroBio"></p>
+      <div class="hero-actions">
+        <a href="https://backendtobasics.substack.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">
+          <i data-feather="book-open"></i>
+          <span id="btnBlog">Blog</span>
+        </a>
+        <a href="https://www.linkedin.com/in/isabelamarques07/" target="_blank" rel="noopener noreferrer" class="action-btn ghost">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://substack.com/@backendtobasics" target="_blank" rel="noopener noreferrer" class="action-btn ghost">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l10.54-6.52L22.539 24V10.812H1.46z"/></svg>
+          Substack
+        </a>
+      </div>
+    </div>
+  </section>
 
-        // Dicionário de emojis (Aconchegante e Tecnológico)
-        const emojis = {
-            // Aconchegante
-            coffee: ['☕', '🤎', '💨', '🥐', '🍪'],
-            books: ['📚', '📖', '✨', '🤓', '🔖'],
-            cats: ['🐾', '🐈', '😻', '🧶', '🐟'],
-            magic: ['🪄', '✨', '🌟', '💫', '🔮'],
-            
-            // Tecnológico
-            code: ['💻', '👨‍💻', '0️⃣', '1️⃣', '⚙️'],
-            servers: ['🖥️', '🌐', '☁️', '🖧', '🔋'],
-            hardware: ['🔌', '💽', '⚡', '🔧', '🤖'],
-            gambiarra: ['🩹', '🚨', '🐛', '🛠️', '🔥']
-        };
+  <hr class="section-divider">
 
-        // Dicionário de Textos (Inglês e Português)
-        const contentDict = {
-            en: {
-                cozy: {
-                    title: 'Hi, I\'m Isabela Dias! ✨',
-                    subtitle: `Welcome to my corner! A space fueled by warm <span class="magic-word" data-type="coffee" title="Click me!">coffee</span>, adventures hidden in <span class="magic-word" data-type="books" title="Click me!">books</span>, the soft purring of cute <span class="magic-word" data-type="cats" title="Click me!">cats</span>, and little touches of daily <span class="magic-word" data-type="magic" title="Click me!">magic</span>.`,
-                    btn1: 'Say Hello',
-                    btn2: 'Read my Blog',
-                    footer: 'Made with love and chamomile tea 🌼',
-                    avatarTitle: 'Click to hack the theme!'
-                },
-                tech: {
-                    title: 'echo "Hello!"; 🚀',
-                    subtitle: `Welcome to my localhost! An environment fueled by optimized <span class="magic-word" data-type="code" title="Execute me!">code</span>, adventures in <span class="magic-word" data-type="servers" title="Execute me!">servers</span>, the soft hum of powerful <span class="magic-word" data-type="hardware" title="Execute me!">hardware</span>, and little touches of daily <span class="magic-word" data-type="gambiarra" title="Execute me!">hacks</span>.`,
-                    btn1: 'Play Slingshot',
-                    btn2: 'Read Docs',
-                    footer: 'Compiled with 0 errors, 0 warnings, and lots of coffee ☕',
-                    avatarTitle: 'Click to restore the theme!'
-                }
-            },
-            pt: {
-                cozy: {
-                    title: 'Olá, eu sou a Isabela Dias! ✨',
-                    subtitle: `Bem-vindo ao meu cantinho! Um espaço movido a <span class="magic-word" data-type="coffee" title="Clique em mim!">café</span> quentinho, aventuras escondidas em <span class="magic-word" data-type="books" title="Clique em mim!">livros</span>, o ronronar suave de <span class="magic-word" data-type="cats" title="Clique em mim!">gatos</span> fofos e pequenos toques de <span class="magic-word" data-type="magic" title="Clique em mim!">magia</span> diária.`,
-                    btn1: 'Dizer um Oi',
-                    btn2: 'Ler meu Blog',
-                    footer: 'Feito com carinho e chá camomila 🌼',
-                    avatarTitle: 'Clique para hackear o tema!'
-                },
-                tech: {
-                    title: 'echo "Olá!"; 🚀',
-                    subtitle: `Bem-vindo ao meu localhost! Um ambiente movido a <span class="magic-word" data-type="code" title="Execute-me!">código</span> otimizado, aventuras em <span class="magic-word" data-type="servers" title="Execute-me!">servidores</span>, o zumbido suave de <span class="magic-word" data-type="hardware" title="Execute-me!">hardware</span> potente e pequenos toques de <span class="magic-word" data-type="gambiarra" title="Execute-me!">gambiarras</span> diárias.`,
-                    btn1: 'Jogar Estilingue',
-                    btn2: 'Ler Documentação',
-                    footer: 'Compilado com 0 erros, 0 avisos e muito café ☕',
-                    avatarTitle: 'Clique para restaurar o tema!'
-                }
-            }
-        };
+  <!-- LAB -->
+  <section class="lab-section">
+    <div class="section-heading">
+      <h2 id="sectionTitle">the lab</h2>
+      <span class="section-comment" id="sectionComment">// my experiments</span>
+    </div>
+    <div class="filters-row" id="filtersRow"></div>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </section>
 
-        let isTechTheme = false;
-        let currentLang = 'en'; // Inglês como default
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p id="footerText">made with ☕ and curiosity · Isabela Dias · 2025</p>
+  </footer>
 
-        // Elementos do DOM
-        const avatarBtn = document.getElementById('avatar-btn');
-        const langBtn = document.getElementById('lang-btn');
-        const titleText = document.getElementById('title-text');
-        const subtitleText = document.getElementById('subtitle-text');
-        const footerText = document.getElementById('footer-text');
-        const avatarImg = document.getElementById('avatar-img');
-        const bgIconContainer = document.getElementById('bg-icon-container');
-        const btnText1 = document.getElementById('btn-text-1');
-        const btnText2 = document.getElementById('btn-text-2');
-        const btnIcon1 = document.getElementById('btn-icon-1');
-        const btnIcon2 = document.getElementById('btn-icon-2');
-        const btnLink1 = document.getElementById('btn-link-1');
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-box" id="modalBox" role="dialog" aria-modal="true"></div>
+  </div>
 
-        // Função Central de Atualização de Conteúdo e Tema
-        function updateContent() {
-            const themeKey = isTechTheme ? 'tech' : 'cozy';
-            const data = contentDict[currentLang][themeKey];
+  <!-- PARTICLES -->
+  <div id="particles-layer"></div>
 
-            // Atualiza Textos
-            titleText.innerHTML = data.title;
-            subtitleText.innerHTML = data.subtitle;
-            btnText1.innerText = data.btn1;
-            btnText2.innerText = data.btn2;
-            footerText.innerHTML = data.footer;
-            avatarBtn.title = data.avatarTitle;
-            document.documentElement.lang = currentLang;
+  <!-- TEAPOT -->
+  <div id="teapot-container" style="position:fixed;bottom:2.5rem;right:-200px;z-index:50;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;">
+    <div style="position:relative;display:flex;align-items:flex-end;justify-content:center;gap:0;margin-bottom:.5rem;overflow:visible;">
+      <div style="position:relative;overflow:visible;">
+        <div style="font-size:3.75rem;position:relative;z-index:0;">☕</div>
+        <div id="coffee-stream" class="coffee-stream"></div>
+        <div id="steam-container" class="steam-container" style="position:absolute;display:flex;justify-content:center;gap:.25rem;pointer-events:none;">
+          <span class="steam-wisp"></span>
+          <span class="steam-wisp"></span>
+          <span class="steam-wisp"></span>
+        </div>
+      </div>
+      <div id="teapot-emoji" style="font-size:4.5rem;transform-origin:20% 80%;z-index:20;margin-left:-1rem;">🫖</div>
+    </div>
+  </div>
 
-            // Primeiro botão: em tech leva ao Slingshot, em cozy fica #
-            btnLink1.href = isTechTheme ? 'slingshot/index.html' : '#';
+  <script>
+    /* ==============================================
+       PROJECTS DATA
+       → Add new projects here to grow the lab!
+       → Set image: null to show the emoji instead.
+    ============================================== */
+    const PROJECTS = [
+      {
+        id: "pomodoro",
+        emoji: "🍅",
+        title: {
+          en: "Pomodoro Timer",
+          pt: "Cronômetro Pomodoro"
+        },
+        shortDesc: {
+          en: "Cozy productivity timer with a task notebook.",
+          pt: "Cronômetro de produtividade com caderno de tarefas."
+        },
+        fullDesc: {
+          en: "A Pomodoro timer with a cozy spiral-notebook aesthetic. Track your focus sessions, manage your task list, and take timed breaks — all in one place. Supports dark mode, bilingual (EN/PT), and saves tasks between sessions with localStorage.",
+          pt: "Um cronômetro Pomodoro com estética de caderno espiral aconchegante. Acompanhe sessões de foco, gerencie tarefas e faça pausas cronometradas. Suporta modo escuro, bilíngue (EN/PT) e salva tarefas entre sessões com localStorage."
+        },
+        tags: ["productivity", "tools"],
+        tech: ["HTML", "CSS", "Vanilla JS"],
+        link: "./pomodoro/",
+        image: "./images/pomodoro.png",
+        status: "live"   /* "live" | "wip" | "planned" */
+      },
+      {
+        id: "slingshot",
+        emoji: "🎯",
+        title: {
+          en: "Slingshot",
+          pt: "Estilingue"
+        },
+        shortDesc: {
+          en: "Physics-based slingshot game with coins, a shop, and a leaderboard.",
+          pt: "Jogo de estilingue com física, moedas, loja e placar."
+        },
+        fullDesc: {
+          en: "A canvas-based physics game where you launch a ball at a moving target. Earn coins for hitting rings, spend them in the shop on 6 power-ups (aim guide, multiball, slow target, double score, magnet, freeze bag), and try to top the leaderboard!",
+          pt: "Um jogo de física em canvas onde você lança uma bola num alvo em movimento. Ganhe moedas acertando os anéis, gaste na loja em 6 power-ups (mira laser, multiball, alvo lento, pontuação dupla, ímã, congelar) e dispute o placar!"
+        },
+        tags: ["game", "fun"],
+        tech: ["HTML Canvas", "CSS", "Vanilla JS"],
+        link: "./slingshot/",
+        image: "./images/slingshot.png",
+        status: "live"
+      }
+    ];
 
-            // Atualiza Tema (Ícones e Avatares)
-            if (isTechTheme) {
-                document.body.classList.add('tech-theme');
-                avatarImg.src = 'https://api.dicebear.com/7.x/bottts/svg?seed=IsabelaTech&backgroundColor=0f172a';
-                bgIconContainer.innerHTML = '<i data-feather="terminal" width="100" height="100"></i>';
-                btnIcon1.innerHTML = '<i data-feather="play" width="18" height="18"></i>';
-                btnIcon2.innerHTML = '<i data-feather="code" width="18" height="18"></i>';
-            } else {
-                document.body.classList.remove('tech-theme');
-                avatarImg.src = 'https://api.dicebear.com/7.x/notionists/svg?seed=Isabela&backgroundColor=fdfbf7';
-                bgIconContainer.innerHTML = '<i data-feather="sun" width="100" height="100"></i>';
-                btnIcon1.innerHTML = '<i data-feather="mail" width="18" height="18"></i>';
-                btnIcon2.innerHTML = '<i data-feather="book-open" width="18" height="18"></i>';
-            }
-            
-            feather.replace();
-        }
+    /* ==============================================
+       TAG EMOJI MAP  (enriches filter labels)
+    ============================================== */
+    const TAG_EMOJI = {
+      productivity: "⏱️",
+      tools:        "🛠️",
+      game:         "🎮",
+      fun:          "🎉",
+      creative:     "🎨",
+      art:          "🖼️",
+      data:         "📊",
+      ai:           "🤖"
+    };
 
-        // Lógica de Troca de Tema (Avatar)
-        avatarBtn.addEventListener('click', () => {
-            isTechTheme = !isTechTheme;
-            updateContent();
-        });
+    /* ==============================================
+       AVATAR URLS
+    ============================================== */
+    const AVATARS = {
+      light: "https://api.dicebear.com/7.x/notionists/svg?seed=Isabela&backgroundColor=fdfbf7",
+      dark:  "https://api.dicebear.com/7.x/bottts/svg?seed=IsabelaTech&backgroundColor=0f172a"
+    };
 
-        // Lógica de Troca de Idioma
-        langBtn.addEventListener('click', () => {
-            if (currentLang === 'en') {
-                currentLang = 'pt';
-                langBtn.innerText = '🇺🇸'; // Muda botão para sugerir inglês
-                langBtn.title = 'Switch to English';
-            } else {
-                currentLang = 'en';
-                langBtn.innerText = '🇧🇷'; // Muda botão para sugerir português
-                langBtn.title = 'Mudar para Português';
-            }
-            updateContent();
-        });
+    /* ==============================================
+       PARTICLE POOLS  (indexed by data-magic value)
+    ============================================== */
+    const PARTICLES = {
+      coffee: ["☕","🤎","💨","🥐","🍪"],
+      café:   ["☕","🤎","💨","🥐","🍪"],
+      books:  ["📚","📖","✨","🤓","🔖"],
+      livros: ["📚","📖","✨","🤓","🔖"],
+      cats:   ["🐾","🐈","😻","🧶","🐟"],
+      gatos:  ["🐾","🐈","😻","🧶","🐟"],
+      magic:  ["🪄","✨","🌟","💫","🔮"],
+      magia:  ["🪄","✨","🌟","💫","🔮"],
+      games:  ["🎮","🕹️","🎯","🏆","⚡"],
+      jogos:  ["🎮","🕹️","🎯","🏆","⚡"]
+    };
 
-        // Delegação de eventos para as palavras mágicas (permite que funcione mesmo após trocar o HTML)
-        document.body.addEventListener('click', (e) => {
-            const word = e.target.closest('.magic-word');
-            
-            if (word) {
-                e.preventDefault();
-                
-                const type = word.getAttribute('data-type');
-                
-                // Animação de pulo
-                word.classList.add('bounce');
-                setTimeout(() => word.classList.remove('bounce'), 300);
+    /* ==============================================
+       UI TEXT STRINGS
+    ============================================== */
+    const UI = {
+      en: {
+        heroH1:         `Hi, I'm <span class="accent">Isabela</span>! ✨`,
+        heroBio:        `Building things with code — from cozy tools to silly <span class="magic-word" data-magic="games">games</span>. I run on <span class="magic-word" data-magic="coffee">coffee</span>, love <span class="magic-word" data-magic="books">books</span> and <span class="magic-word" data-magic="cats">cats</span>, and believe a little <span class="magic-word" data-magic="magic">magic</span> makes everything better. This is my lab. ✨`,
+        sectionTitle:   "the lab",
+        sectionComment: "// my experiments",
+        filterAll:      "All",
+        statusLive:     "Live",
+        statusWip:      "In Progress",
+        statusPlanned:  "Planned",
+        builtWith:      "Built with",
+        openProject:    "Open Project",
+        overlayHint:    "click to learn more →",
+        footer:         "made with ☕ and curiosity · Isabela Dias · 2025",
+        btnBlog:        "Blog",
+        themeDark:      "dark",
+        themeLight:     "light",
+        langToggle:     "PT",
+        back:           "← back"
+      },
+      pt: {
+        heroH1:         `Oi, eu sou a <span class="accent">Isabela</span>! ✨`,
+        heroBio:        `Construo coisas com código — de ferramentas aconchegantes a <span class="magic-word" data-magic="jogos">jogos</span> bobos. Funciono a base de <span class="magic-word" data-magic="café">café</span>, amo <span class="magic-word" data-magic="livros">livros</span> e <span class="magic-word" data-magic="gatos">gatos</span>, e acredito que um pouco de <span class="magic-word" data-magic="magia">magia</span> melhora tudo. Esse é meu laboratório. ✨`,
+        sectionTitle:   "o laboratório",
+        sectionComment: "// meus experimentos",
+        filterAll:      "Todos",
+        statusLive:     "Ao Vivo",
+        statusWip:      "Em Progresso",
+        statusPlanned:  "Planejado",
+        builtWith:      "Feito com",
+        openProject:    "Abrir Projeto",
+        overlayHint:    "clique para explorar →",
+        footer:         "feito com ☕ e curiosidade · Isabela Dias · 2025",
+        btnBlog:        "Blog",
+        themeDark:      "escuro",
+        themeLight:     "claro",
+        langToggle:     "EN",
+        back:           "← voltar"
+      }
+    };
 
-                // Partículas
-                if(emojis[type]) {
-                    createParticles(e.clientX, e.clientY, emojis[type]);
-                }
+    /* ==============================================
+       STATE
+    ============================================== */
+    let lang         = localStorage.getItem("lab-lang")  || "en";
+    let theme        = localStorage.getItem("lab-theme") || "light";
+    let activeFilter = "all";
+    let modalOpen    = false;
 
-                // Animação lateral (só para café/coffee)
-                if (type === 'coffee') {
-                    triggerTeapotAnimation();
-                }
-            }
-        });
+    /* ==============================================
+       THEME
+    ============================================== */
+    function applyTheme(t) {
+      theme = t;
+      document.documentElement.setAttribute("data-theme", t);
+      document.getElementById("avatarImg").src = AVATARS[t];
+      const icon  = document.getElementById("themeIcon");
+      const label = document.getElementById("themeLabel");
+      icon.setAttribute("data-feather", t === "dark" ? "sun" : "moon");
+      label.textContent = t === "dark" ? UI[lang].themeLight : UI[lang].themeDark;
+      feather.replace();
+      localStorage.setItem("lab-theme", t);
+    }
 
-        // Função para acionar a animação (bule + xícara + linha de café + fumaça)
-        function triggerTeapotAnimation() {
-            const container = document.getElementById('teapot-container');
-            const teapot = document.getElementById('teapot-emoji');
-            const stream = document.getElementById('coffee-stream');
-            const steamContainer = document.getElementById('steam-container');
+    /* ==============================================
+       LANGUAGE
+    ============================================== */
+    function applyLang(l) {
+      lang = l;
+      document.documentElement.lang = l;
+      document.getElementById("heroH1").innerHTML        = UI[l].heroH1;
+      document.getElementById("heroBio").innerHTML       = UI[l].heroBio;
+      document.getElementById("sectionTitle").textContent  = UI[l].sectionTitle;
+      document.getElementById("sectionComment").textContent = UI[l].sectionComment;
+      document.getElementById("footerText").textContent  = UI[l].footer;
+      document.getElementById("btnBlog").textContent     = UI[l].btnBlog;
+      document.getElementById("langLabel").textContent   = UI[l].langToggle;
+      document.getElementById("themeLabel").textContent  = theme === "dark" ? UI[l].themeLight : UI[l].themeDark;
+      renderFilters();
+      renderCards();
+      localStorage.setItem("lab-lang", l);
+    }
 
-            container.classList.remove('animate-container');
-            teapot.classList.remove('animate-teapot');
-            stream.classList.remove('animate-stream');
-            steamContainer.classList.remove('animate-steam');
+    /* ==============================================
+       FILTERS
+    ============================================== */
+    function renderFilters() {
+      const row = document.getElementById("filtersRow");
+      row.innerHTML = "";
+      row.appendChild(makeFilterPill(UI[lang].filterAll, "all"));
+      const tags = [...new Set(PROJECTS.flatMap(p => p.tags))];
+      tags.forEach(t => row.appendChild(makeFilterPill((TAG_EMOJI[t] ? TAG_EMOJI[t] + " " : "") + t, t)));
+    }
 
-            void container.offsetWidth; // Trigger reflow
+    function makeFilterPill(label, value) {
+      const btn = document.createElement("button");
+      btn.className = "filter-pill" + (activeFilter === value ? " active" : "");
+      btn.textContent = label;
+      btn.onclick = () => { activeFilter = value; renderFilters(); renderCards(); };
+      return btn;
+    }
 
-            container.classList.add('animate-container');
-            teapot.classList.add('animate-teapot');
-            stream.classList.add('animate-stream');
-            steamContainer.classList.add('animate-steam');
-        }
+    /* ==============================================
+       CARDS
+    ============================================== */
+    function statusLabel(s) {
+      const map = { live: UI[lang].statusLive, wip: UI[lang].statusWip, planned: UI[lang].statusPlanned };
+      return map[s] || s;
+    }
 
-        // Função para criar as partículas flutuantes
-        function createParticles(x, y, emojiArray) {
-            const numParticles = Math.floor(Math.random() * 5) + 6;
+    function renderCards() {
+      const grid = document.getElementById("projectsGrid");
+      grid.innerHTML = "";
+      const list = activeFilter === "all"
+        ? PROJECTS
+        : PROJECTS.filter(p => p.tags.includes(activeFilter));
 
-            for(let i = 0; i < numParticles; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                particle.innerText = emojiArray[Math.floor(Math.random() * emojiArray.length)];
-                document.body.appendChild(particle);
+      if (!list.length) {
+        grid.innerHTML = `<div class="empty-state"><div class="big-emoji">🔬</div><p>Nothing here yet…</p></div>`;
+        return;
+      }
 
-                const angle = Math.random() * Math.PI * 2; 
-                const velocity = 60 + Math.random() * 80; 
-                
-                const tx = Math.cos(angle) * velocity;
-                const ty = Math.sin(angle) * velocity - 40; 
-                const rot = (Math.random() - 0.5) * 200; 
+      list.forEach(p => {
+        const card = document.createElement("article");
+        card.className = "project-card";
+        card.setAttribute("role", "button");
+        card.setAttribute("tabindex", "0");
+        card.onclick = () => openModal(p.id);
+        card.onkeydown = e => { if (e.key === "Enter" || e.key === " ") openModal(p.id); };
 
-                particle.style.left = (x - 15) + 'px';
-                particle.style.top = (y - 15) + 'px';
-                particle.style.setProperty('--tx', `${tx}px`);
-                particle.style.setProperty('--ty', `${ty}px`);
-                particle.style.setProperty('--rot', `${rot}deg`);
+        const preview = p.image
+          ? `<div class="card-preview">
+               <img src="${p.image}" alt="${p.title[lang]}" loading="lazy">
+               <div class="card-overlay">
+                 <p class="overlay-short-desc">${p.shortDesc[lang]}</p>
+                 <span class="overlay-cta">${UI[lang].overlayHint}</span>
+               </div>
+               <span class="status-badge status-${p.status}">${statusLabel(p.status)}</span>
+             </div>`
+          : `<div class="card-preview-emoji">
+               ${p.emoji}
+               <span class="status-badge status-${p.status}">${statusLabel(p.status)}</span>
+             </div>`;
 
-                setTimeout(() => {
-                    particle.remove();
-                }, 1000);
-            }
-        }
-    </script>
+        const tagPills = p.tags.map(t =>
+          `<span class="tag-pill">${(TAG_EMOJI[t] || "") + " " + t}</span>`
+        ).join("");
+
+        card.innerHTML = `
+          ${preview}
+          <div class="card-body">
+            <div class="card-title-row">
+              <span class="card-emoji">${p.emoji}</span>
+              <h3>${p.title[lang]}</h3>
+            </div>
+            <div class="tags-row">${tagPills}</div>
+          </div>`;
+
+        grid.appendChild(card);
+      });
+    }
+
+    /* ==============================================
+       MODAL
+    ============================================== */
+    function openModal(id) {
+      const p = PROJECTS.find(pr => pr.id === id);
+      if (!p) return;
+
+      const imgHtml = p.image
+        ? `<img class="modal-img" src="${p.image}" alt="${p.title[lang]}">`
+        : `<div class="modal-emoji-placeholder">${p.emoji}</div>`;
+
+      const openBtn = p.status === "planned"
+        ? `<button class="action-btn ghost" disabled>${UI[lang].statusPlanned}…</button>`
+        : `<a href="${p.link}" class="action-btn primary" target="_blank" rel="noopener noreferrer">
+             <i data-feather="external-link"></i> ${UI[lang].openProject}
+           </a>`;
+
+      const techPills = p.tech.map(t => `<span class="tag-pill">⚙️ ${t}</span>`).join("");
+      const tagPills  = p.tags.map(t => `<span class="tag-pill">${(TAG_EMOJI[t] || "") + " " + t}</span>`).join("");
+
+      document.getElementById("modalBox").innerHTML = `
+        ${imgHtml}
+        <div class="modal-body">
+          <div class="modal-top">
+            <div class="modal-title-row">
+              <span class="modal-emoji">${p.emoji}</span>
+              <h2 class="modal-title">${p.title[lang]}</h2>
+            </div>
+            <button class="modal-close-btn" onclick="closeModal()" aria-label="Close">
+              <i data-feather="x"></i>
+            </button>
+          </div>
+          <p class="modal-description">${p.fullDesc[lang]}</p>
+          <div class="modal-meta-section">
+            <div class="meta-label">${UI[lang].builtWith}</div>
+            <div class="tags-row">${techPills}</div>
+          </div>
+          <div class="modal-meta-section">
+            <div class="meta-label">Tags</div>
+            <div class="tags-row">${tagPills}</div>
+          </div>
+          <div class="modal-actions">
+            ${openBtn}
+            <button class="action-btn ghost" onclick="closeModal()">${UI[lang].back}</button>
+          </div>
+        </div>`;
+
+      document.getElementById("modalBackdrop").classList.add("open");
+      document.body.style.overflow = "hidden";
+      modalOpen = true;
+      feather.replace();
+    }
+
+    function closeModal() {
+      document.getElementById("modalBackdrop").classList.remove("open");
+      document.body.style.overflow = "";
+      modalOpen = false;
+    }
+
+    /* ==============================================
+       PARTICLES
+    ============================================== */
+    document.addEventListener("click", e => {
+      const word = e.target.closest(".magic-word");
+      if (!word) return;
+      const key  = word.dataset.magic || "";
+      const pool = PARTICLES[key] || ["✨","🌟","💫"];
+      const rect = word.getBoundingClientRect();
+      const cx = rect.left + rect.width  / 2;
+      const cy = rect.top  + rect.height / 2;
+      for (let i = 0; i < 9; i++) spawnParticle(cx, cy, pool[i % pool.length]);
+      if (key === "coffee" || key === "café") triggerTeapot();
+    });
+
+    function spawnParticle(x, y, emoji) {
+      const el    = document.createElement("div");
+      el.className = "particle";
+      el.textContent = emoji;
+      const angle = Math.random() * Math.PI * 2;
+      const dist  = 65 + Math.random() * 80;
+      const rot   = (Math.random() - 0.5) * 260;
+      el.style.setProperty("--dx", Math.cos(angle) * dist + "px");
+      el.style.setProperty("--dy", (Math.sin(angle) * dist - 35) + "px");
+      el.style.setProperty("--rot", rot + "deg");
+      el.style.left = x + "px";
+      el.style.top  = y + "px";
+      el.style.fontSize = (0.85 + Math.random() * 0.85) + "rem";
+      document.getElementById("particles-layer").appendChild(el);
+      el.addEventListener("animationend", () => el.remove(), { once: true });
+    }
+
+    /* ==============================================
+       TEAPOT
+    ============================================== */
+    function triggerTeapot() {
+      const c  = document.getElementById("teapot-container");
+      const tp = document.getElementById("teapot-emoji");
+      const st = document.getElementById("coffee-stream");
+      const sc = document.getElementById("steam-container");
+      [c,tp,st,sc].forEach(el =>
+        el.classList.remove("animate-container","animate-teapot","animate-stream","animate-steam")
+      );
+      void c.offsetWidth;
+      c.classList.add("animate-container");
+      tp.classList.add("animate-teapot");
+      st.classList.add("animate-stream");
+      sc.classList.add("animate-steam");
+    }
+
+    /* ==============================================
+       INIT
+    ============================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+      // Apply theme first (sets avatar + icon)
+      applyTheme(theme);
+      // Apply language (renders all text + cards + filters)
+      applyLang(lang);
+
+      // Controls
+      document.getElementById("themeToggle").addEventListener("click", () => applyTheme(theme === "light" ? "dark" : "light"));
+      document.getElementById("langToggle").addEventListener("click",  () => applyLang(lang === "en" ? "pt" : "en"));
+      document.getElementById("avatarBtn").addEventListener("click",   () => applyTheme(theme === "light" ? "dark" : "light"));
+
+      // Modal close
+      document.getElementById("modalBackdrop").addEventListener("click", e => {
+        if (e.target === document.getElementById("modalBackdrop")) closeModal();
+      });
+      document.addEventListener("keydown", e => { if (e.key === "Escape" && modalOpen) closeModal(); });
+    });
+  </script>
 </body>
 </html>
