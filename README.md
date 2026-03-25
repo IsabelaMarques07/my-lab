@@ -40,6 +40,8 @@ A stylish Pomodoro timer application with a task notebook interface. Features in
 - **Technologies:** HTML, Tailwind CSS, JavaScript
 - **Status:** Active Development 🔄
 
+> **💡 What I learned:** This project was built to explore **Windsurf** as an AI-powered IDE and the **Kimi K2.5 LLM**. The goal was to understand how these tools assist in the development workflow — from generating UI components to iterating on features through natural language prompts.
+
 **Screenshot:**
 
 ![Pomodoro Timer](images/pomodoro.png)
@@ -52,9 +54,21 @@ A fun, physics-based slingshot web game playable right in the browser.
 - **Technologies:** HTML, CSS, JavaScript
 - **Status:** Active Development 🔄
 
+> **💡 What I learned:** This game was built **100% through command prompts with Claude (Anthropic)** — no manual coding involved. The experiment was about understanding how far you can go using only conversational AI prompts to build a functional, interactive browser game from scratch.
+
 **Screenshot:**
 
 ![Slingshot Game](images/slingshot.png)
+
+### 4. 🃏 Autominer
+
+A productivity tool that automatically creates flashcards ready to export to Anki. Reduces card creation time from 2–4 minutes down to just 30 seconds each.
+
+- **Technologies:** Next.js, React, TypeScript, Tailwind CSS (frontend) · Java 21, Spring Boot (backend)
+- **Status:** In Progress 🔄
+- **Link:** https://autominer.vercel.app/
+
+> **💡 What I learned:** Learned **web scraping** and its core concepts while building the data extraction layer. Also gained hands-on experience with a full-stack setup using Next.js, React, TypeScript and Tailwind on the frontend, and Java 21 + Spring Boot on the backend.
 
 ## 🚀 How to Run
 

@@ -125,14 +125,13 @@
     @media (max-width: 640px) {
       .hero { flex-direction: column; text-align: center; padding: 2rem 1.25rem 1.75rem; gap: 1.5rem; }
     }
-    .avatar-wrap { flex-shrink: 0; position: relative; cursor: pointer; }
+    .avatar-wrap { flex-shrink: 0; position: relative; cursor: pointer; animation: float 6s ease-in-out infinite; }
     .avatar-wrap img {
       width: 110px; height: 110px;
       border-radius: 50%;
       border: 3.5px solid var(--accent);
       object-fit: cover;
       background: var(--surface-solid);
-      animation: float 6s ease-in-out infinite;
       transition: border-color 0.5s, box-shadow 0.3s;
     }
     .avatar-wrap:hover img {
@@ -162,6 +161,45 @@
       transition: color 0.5s;
     }
     @media (max-width: 640px) { .hero-content p { margin: 0 auto; } }
+
+    /* ===================== TYPED SUBTITLE ===================== */
+    .typed-subtitle {
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--accent3);
+      margin-bottom: 0.55rem; min-height: 1.3em;
+      transition: color 0.5s;
+    }
+    [data-theme="dark"] .typed-subtitle { color: var(--accent); opacity: 0.85; }
+    .typed-cursor {
+      display: inline-block; width: 2px; height: 0.85em;
+      background: var(--accent); margin-left: 2px; vertical-align: middle;
+      animation: blink 0.85s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ===================== KONAMI TOAST ===================== */
+    .konami-toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--card-bg); border: 1.5px solid var(--accent);
+      padding: 0.55rem 1.3rem; border-radius: 999px;
+      font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 700;
+      color: var(--text); z-index: 9999; pointer-events: none;
+      opacity: 0; transition: opacity 0.4s, transform 0.4s;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.14);
+    }
+    .konami-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ===================== COUNTER BADGE ===================== */
+    .counter-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.2rem 0.75rem;
+      background: var(--tag-bg);
+      border: 1.5px solid var(--accent); border-radius: 999px;
+      font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 800;
+      color: var(--accent); margin-left: auto; align-self: center;
+      transition: background 0.5s, border-color 0.5s, color 0.5s;
+    }
 
     .magic-word {
       font-weight: 700; color: var(--accent2); cursor: pointer;
@@ -375,6 +413,18 @@
       margin-bottom: 1.25rem; transition: color 0.5s;
     }
     .modal-meta-section { margin-bottom: 1rem; }
+    .modal-learned {
+      margin-bottom: 1.25rem;
+      padding: 0.85rem 1rem;
+      background: var(--tag-bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+    }
+    .modal-learned .meta-label { margin-bottom: 0.45rem; color: var(--accent); }
+    .learned-text {
+      font-size: 0.9rem; line-height: 1.7;
+      color: var(--text); margin: 0;
+    }
     .meta-label {
       font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
       letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.4rem;
@@ -474,6 +524,7 @@
     </div>
     <div class="hero-content">
       <h1 id="heroH1">Hi, I'm <span class="accent">Isabela</span>! ✨</h1>
+      <p class="typed-subtitle"><span id="typedText"></span><span class="typed-cursor" id="typedCursor"></span></p>
       <p id="heroBio"></p>
       <div class="hero-actions">
         <a href="https://backendtobasics.substack.com/" target="_blank" rel="noopener noreferrer" class="action-btn primary">
@@ -484,9 +535,9 @@
           <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           LinkedIn
         </a>
-        <a href="https://substack.com/@backendtobasics" target="_blank" rel="noopener noreferrer" class="action-btn ghost">
-          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l10.54-6.52L22.539 24V10.812H1.46z"/></svg>
-          Substack
+        <a href="https://github.com/IsabelaMarques07" target="_blank" rel="noopener noreferrer" class="action-btn ghost">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
         </a>
       </div>
     </div>
@@ -499,6 +550,7 @@
     <div class="section-heading">
       <h2 id="sectionTitle">the lab</h2>
       <span class="section-comment" id="sectionComment">// my experiments</span>
+      <span class="counter-badge" id="counterBadge">0 <span id="counterLabel">projects</span></span>
     </div>
     <div class="filters-row" id="filtersRow"></div>
     <div class="projects-grid" id="projectsGrid"></div>
@@ -541,6 +593,31 @@
     ============================================== */
     const PROJECTS = [
       {
+        id: "autominer",
+        emoji: "🃏",
+        title: {
+          en: "Autominer",
+          pt: "Autominer"
+        },
+        shortDesc: {
+          en: "Automatic flashcard generator — export to Anki in seconds.",
+          pt: "Gerador automático de flashcards — exporte para o Anki em segundos."
+        },
+        fullDesc: {
+          en: "A productivity tool that automatically creates flashcards ready to export to Anki. It reduces card creation time from 2–4 minutes down to just 30 seconds each — so you spend less time formatting and more time actually learning.",
+          pt: "Uma ferramenta de produtividade que cria flashcards automaticamente, prontos para exportar no Anki. Reduz o tempo de criação de cada card de 2 a 4 minutos para apenas 30 segundos — menos tempo formatando, mais tempo aprendendo."
+        },
+        learned: {
+          en: "Learned web scraping and its core concepts while building the data extraction layer. Also gained hands-on experience with a full-stack setup: Next.js, React, and TypeScript on the frontend with Tailwind CSS, and Java 21 + Spring Boot on the backend.",
+          pt: "Aprendi web scraping e seus conceitos fundamentais na construção da camada de extração de dados. Também ganhei experiência prática com uma stack full-stack: Next.js, React e TypeScript no frontend com Tailwind CSS, e Java 21 + Spring Boot no backend."
+        },
+        tags: ["productivity", "tools"],
+        tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Java 21", "Spring Boot"],
+        link: "https://autominer.vercel.app/",
+        image: "./images/autominer.png",
+        status: "wip"
+      },
+      {
         id: "pomodoro",
         emoji: "🍅",
         title: {
@@ -554,6 +631,10 @@
         fullDesc: {
           en: "A Pomodoro timer with a cozy spiral-notebook aesthetic. Track your focus sessions, manage your task list, and take timed breaks — all in one place. Supports dark mode, bilingual (EN/PT), and saves tasks between sessions with localStorage.",
           pt: "Um cronômetro Pomodoro com estética de caderno espiral aconchegante. Acompanhe sessões de foco, gerencie tarefas e faça pausas cronometradas. Suporta modo escuro, bilíngue (EN/PT) e salva tarefas entre sessões com localStorage."
+        },
+        learned: {
+          en: "Built to explore Windsurf as an AI-powered IDE and the Kimi K2.5 LLM. The goal was to understand how these tools assist in the development workflow — from generating UI components to iterating on features through natural language prompts.",
+          pt: "Criado para explorar o Windsurf como IDE com IA e a LLM Kimi K2.5. O objetivo foi entender como essas ferramentas auxiliam no fluxo de desenvolvimento — desde a geração de componentes até a iteração de funcionalidades via prompts em linguagem natural."
         },
         tags: ["productivity", "tools"],
         tech: ["HTML", "CSS", "Vanilla JS"],
@@ -575,6 +656,10 @@
         fullDesc: {
           en: "A canvas-based physics game where you launch a ball at a moving target. Earn coins for hitting rings, spend them in the shop on 6 power-ups (aim guide, multiball, slow target, double score, magnet, freeze bag), and try to top the leaderboard!",
           pt: "Um jogo de física em canvas onde você lança uma bola num alvo em movimento. Ganhe moedas acertando os anéis, gaste na loja em 6 power-ups (mira laser, multiball, alvo lento, pontuação dupla, ímã, congelar) e dispute o placar!"
+        },
+        learned: {
+          en: "This game was built 100% through command prompts with Claude (Anthropic) — no manual coding. The experiment was about understanding how far you can go using only conversational AI to build a functional, interactive browser game from scratch.",
+          pt: "Este jogo foi criado 100% via prompts de comando no Claude (Anthropic) — sem código manual. O experimento foi entender até onde dá pra chegar usando apenas IA conversacional para construir um jogo de browser funcional do zero."
         },
         tags: ["game", "fun"],
         tech: ["HTML Canvas", "CSS", "Vanilla JS"],
@@ -602,8 +687,8 @@
        AVATAR URLS
     ============================================== */
     const AVATARS = {
-      light: "https://api.dicebear.com/7.x/notionists/svg?seed=Isabela&backgroundColor=fdfbf7",
-      dark:  "https://api.dicebear.com/7.x/bottts/svg?seed=IsabelaTech&backgroundColor=0f172a"
+      light: "https://api.dicebear.com/7.x/notionists/svg?seed=l&backgroundColor=fdfbf7&body=variant03&bodyIconProbability=100&brows=variant05&eyes=variant05&hair=variant39&lips=variant14",
+      dark:  "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=IsabelaTech&backgroundColor=0f172a"
     };
 
     /* ==============================================
@@ -614,8 +699,8 @@
       café:   ["☕","🤎","💨","🥐","🍪"],
       books:  ["📚","📖","✨","🤓","🔖"],
       livros: ["📚","📖","✨","🤓","🔖"],
-      cats:   ["🐾","🐈","😻","🧶","🐟"],
-      gatos:  ["🐾","🐈","😻","🧶","🐟"],
+      cinema: ["🎬","🍿","🎞️","⭐","🎥"],
+      cinema2:["🎬","🍿","🎞️","⭐","🎥"],
       magic:  ["🪄","✨","🌟","💫","🔮"],
       magia:  ["🪄","✨","🌟","💫","🔮"],
       games:  ["🎮","🕹️","🎯","🏆","⚡"],
@@ -628,7 +713,7 @@
     const UI = {
       en: {
         heroH1:         `Hi, I'm <span class="accent">Isabela</span>! ✨`,
-        heroBio:        `Building things with code — from cozy tools to silly <span class="magic-word" data-magic="games">games</span>. I run on <span class="magic-word" data-magic="coffee">coffee</span>, love <span class="magic-word" data-magic="books">books</span> and <span class="magic-word" data-magic="cats">cats</span>, and believe a little <span class="magic-word" data-magic="magic">magic</span> makes everything better. This is my lab. ✨`,
+        heroBio:        `Building things with code — from cozy tools to silly <span class="magic-word" data-magic="games">games</span>. I run on <span class="magic-word" data-magic="coffee">coffee</span>, love <span class="magic-word" data-magic="books">books</span> and <span class="magic-word" data-magic="cinema">cinema</span>, and believe a little <span class="magic-word" data-magic="magic">magic</span> makes everything better. This is my lab. ✨`,
         sectionTitle:   "the lab",
         sectionComment: "// my experiments",
         filterAll:      "All",
@@ -636,7 +721,10 @@
         statusWip:      "In Progress",
         statusPlanned:  "Planned",
         builtWith:      "Built with",
+        typedLine:      "backend developer · building cool things",
+        counterLabel:   "projects",
         openProject:    "Open Project",
+        learnedLabel:   "💡 What I learned",
         overlayHint:    "click to learn more →",
         footer:         "made with ☕ and curiosity · Isabela Dias · 2025",
         btnBlog:        "Blog",
@@ -647,7 +735,7 @@
       },
       pt: {
         heroH1:         `Oi, eu sou a <span class="accent">Isabela</span>! ✨`,
-        heroBio:        `Construo coisas com código — de ferramentas aconchegantes a <span class="magic-word" data-magic="jogos">jogos</span> bobos. Funciono a base de <span class="magic-word" data-magic="café">café</span>, amo <span class="magic-word" data-magic="livros">livros</span> e <span class="magic-word" data-magic="gatos">gatos</span>, e acredito que um pouco de <span class="magic-word" data-magic="magia">magia</span> melhora tudo. Esse é meu laboratório. ✨`,
+        heroBio:        `Construo coisas com código — de ferramentas aconchegantes a <span class="magic-word" data-magic="jogos">jogos</span> bobos. Funciono a base de <span class="magic-word" data-magic="café">café</span>, amo <span class="magic-word" data-magic="livros">livros</span> e <span class="magic-word" data-magic="cinema2">cinema</span>, e acredito que um pouco de <span class="magic-word" data-magic="magia">magia</span> melhora tudo. Esse é meu laboratório. ✨`,
         sectionTitle:   "o laboratório",
         sectionComment: "// meus experimentos",
         filterAll:      "Todos",
@@ -655,7 +743,10 @@
         statusWip:      "Em Progresso",
         statusPlanned:  "Planejado",
         builtWith:      "Feito com",
+        typedLine:      "desenvolvedora backend · construindo coisas legais",
+        counterLabel:   "projetos",
         openProject:    "Abrir Projeto",
+        learnedLabel:   "💡 O que eu aprendi",
         overlayHint:    "clique para explorar →",
         footer:         "feito com ☕ e curiosidade · Isabela Dias · 2025",
         btnBlog:        "Blog",
@@ -695,7 +786,7 @@
     function applyLang(l) {
       lang = l;
       document.documentElement.lang = l;
-      document.getElementById("heroH1").innerHTML        = UI[l].heroH1;
+      document.getElementById("heroH1").innerHTML        = getGreeting(l);
       document.getElementById("heroBio").innerHTML       = UI[l].heroBio;
       document.getElementById("sectionTitle").textContent  = UI[l].sectionTitle;
       document.getElementById("sectionComment").textContent = UI[l].sectionComment;
@@ -705,6 +796,8 @@
       document.getElementById("themeLabel").textContent  = theme === "dark" ? UI[l].themeLight : UI[l].themeDark;
       renderFilters();
       renderCards();
+      document.getElementById("counterLabel").textContent = UI[l].counterLabel;
+      startTyping(UI[l].typedLine);
       localStorage.setItem("lab-lang", l);
     }
 
@@ -828,6 +921,11 @@
             <div class="meta-label">Tags</div>
             <div class="tags-row">${tagPills}</div>
           </div>
+          ${p.learned ? `
+          <div class="modal-learned">
+            <div class="meta-label">${UI[lang].learnedLabel}</div>
+            <p class="learned-text">${p.learned[lang]}</p>
+          </div>` : ""}
           <div class="modal-actions">
             ${openBtn}
             <button class="action-btn ghost" onclick="closeModal()">${UI[lang].back}</button>
@@ -897,6 +995,132 @@
     }
 
     /* ==============================================
+       TIME-BASED GREETING
+    ============================================== */
+    function getGreeting(l) {
+      const h = new Date().getHours();
+      const greet = h < 5  ? (l === "en" ? "Good night 🌙"     : "Boa noite 🌙")
+                 : h < 12 ? (l === "en" ? "Good morning ☀️"   : "Bom dia ☀️")
+                 : h < 18 ? (l === "en" ? "Good afternoon 🌤️" : "Boa tarde 🌤️")
+                 : h < 22 ? (l === "en" ? "Good evening 🌙"   : "Boa noite 🌙")
+                 :           (l === "en" ? "Good night 🌙"     : "Boa noite 🌙");
+      return l === "en"
+        ? `${greet}, I'm <span class="accent">Isabela</span>!`
+        : `${greet}, eu sou a <span class="accent">Isabela</span>!`;
+    }
+
+    /* ==============================================
+       STATUS BADGE TOOLTIPS
+    ============================================== */
+    const STATUS_TOOLTIP = {
+      live:    "deployed and running ✨",
+      wip:     "being cooked... 🍳",
+      planned: "coming soon... 💭"
+    };
+
+    const badgeTooltip = document.createElement("div");
+    badgeTooltip.style.cssText = `
+      position:fixed; z-index:9998; padding:0.3rem 0.65rem;
+      background:var(--card-bg); border:1.5px solid var(--border);
+      border-radius:8px; font-family:'Nunito',sans-serif;
+      font-size:0.72rem; font-weight:700; color:var(--text);
+      pointer-events:none; opacity:0; transition:opacity 0.15s;
+      box-shadow:0 4px 14px rgba(0,0,0,0.1); white-space:nowrap;
+    `;
+    document.body.appendChild(badgeTooltip);
+
+    document.addEventListener("mouseover", e => {
+      const badge = e.target.closest(".status-badge");
+      if (!badge) return;
+      const status = [...badge.classList].find(c => c.startsWith("status-") && c !== "status-badge")?.replace("status-","");
+      const text = STATUS_TOOLTIP[status];
+      if (!text) return;
+      const r = badge.getBoundingClientRect();
+      badgeTooltip.textContent = text;
+      badgeTooltip.style.top  = (r.bottom + 6) + "px";
+      badgeTooltip.style.left = r.right + "px";
+      badgeTooltip.style.transform = "translateX(-100%)";
+      badgeTooltip.style.opacity = "1";
+    });
+    document.addEventListener("mouseout", e => {
+      if (e.target.closest(".status-badge")) badgeTooltip.style.opacity = "0";
+    });
+
+    /* ==============================================
+       KONAMI CODE
+    ============================================== */
+    const KONAMI_SEQ = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+    let konamiIdx = 0;
+
+    const konamiToast = document.createElement("div");
+    konamiToast.className = "konami-toast";
+    konamiToast.textContent = "🎮 cheat code activated! you found the secret ✨";
+    document.body.appendChild(konamiToast);
+
+    document.addEventListener("keydown", e => {
+      if (e.key === KONAMI_SEQ[konamiIdx]) {
+        konamiIdx++;
+        if (konamiIdx === KONAMI_SEQ.length) {
+          konamiIdx = 0;
+          triggerKonami();
+        }
+      } else {
+        konamiIdx = e.key === KONAMI_SEQ[0] ? 1 : 0;
+      }
+    });
+
+    function triggerKonami() {
+      const pool = ["🌟","✨","💫","🎉","🎊","🪄","🔮","💥","🚀","⭐","🎮","🕹️"];
+      for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+          const cx = Math.random() * window.innerWidth;
+          const cy = Math.random() * window.innerHeight * 0.7;
+          spawnParticle(cx, cy, pool[i % pool.length]);
+        }, i * 40);
+      }
+      konamiToast.classList.add("show");
+      setTimeout(() => konamiToast.classList.remove("show"), 3000);
+    }
+
+    /* ==============================================
+       TYPING ANIMATION
+    ============================================== */
+    let typingTimer = null;
+
+    function startTyping(text) {
+      const el = document.getElementById("typedText");
+      const cursor = document.getElementById("typedCursor");
+      el.textContent = "";
+      cursor.style.display = "inline-block";
+      if (typingTimer) clearInterval(typingTimer);
+      let i = 0;
+      typingTimer = setInterval(() => {
+        el.textContent += text[i++];
+        if (i >= text.length) {
+          clearInterval(typingTimer);
+          typingTimer = null;
+          setTimeout(() => { cursor.style.display = "none"; }, 1800);
+        }
+      }, 38);
+    }
+
+    /* ==============================================
+       COUNTER ANIMATION
+    ============================================== */
+    function animateCounter(target) {
+      const badge = document.getElementById("counterBadge");
+      const label = document.getElementById("counterLabel");
+      label.textContent = UI[lang].counterLabel;
+      let count = 0;
+      const step = Math.ceil(target / 18);
+      const timer = setInterval(() => {
+        count = Math.min(count + step, target);
+        badge.firstChild.textContent = count + " ";
+        if (count >= target) clearInterval(timer);
+      }, 55);
+    }
+
+    /* ==============================================
        INIT
     ============================================== */
     document.addEventListener("DOMContentLoaded", () => {
@@ -909,6 +1133,17 @@
       document.getElementById("themeToggle").addEventListener("click", () => applyTheme(theme === "light" ? "dark" : "light"));
       document.getElementById("langToggle").addEventListener("click",  () => applyLang(lang === "en" ? "pt" : "en"));
       document.getElementById("avatarBtn").addEventListener("click",   () => applyTheme(theme === "light" ? "dark" : "light"));
+
+      // Counter observer
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounter(PROJECTS.length);
+            counterObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      counterObserver.observe(document.getElementById("counterBadge"));
 
       // Modal close
       document.getElementById("modalBackdrop").addEventListener("click", e => {
