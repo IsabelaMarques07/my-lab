@@ -70,6 +70,30 @@ A productivity tool that automatically creates flashcards ready to export to Ank
 
 > **💡 What I learned:** Learned **web scraping** and its core concepts while building the data extraction layer. Also gained hands-on experience with a full-stack setup using Next.js, React, TypeScript and Tailwind on the frontend, and Java 21 + Spring Boot on the backend.
 
+### 5. 🎙️ Heimdall
+
+A Windows desktop application for capturing and transcribing system audio in real-time using local AI models — no data leaves your machine.
+
+- **Technologies:** Python, Faster-Whisper, Ollama, CustomTkinter, PyAudioWPatch, FFmpeg
+- **Status:** Active Development 🔄
+- **Link:** https://github.com/IsabelaMarques07/heimdall
+
+**Screenshot:**
+
+![Heimdall](images/heimdall.png)
+
+### 6. ✨ Lumina
+
+A lightweight desktop PDF reader focused on extracting and organizing important passages through highlighting and Markdown export.
+
+- **Technologies:** Python, PyMuPDF, Pillow
+- **Status:** Active Development 🔄
+- **Link:** https://github.com/IsabelaMarques07/lumina
+
+**Screenshot:**
+
+![Lumina](images/lumina.png)
+
 ## 🚀 How to Run
 
 Currently, the projects are kept as simple, standalone HTML files. Running them is very straightforward!
